@@ -1,2 +1,3 @@
-# msan601casestudies
-This repo is for MSAN 601 case studies
+This repo is for MSAN 601 case studies.
+Chaman Preet Kaur and Chris Atterbury are the contributors.
+
