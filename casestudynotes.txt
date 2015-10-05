@@ -1,0 +1,14 @@
+Sections:
+Executive Summary (Chris and Chaman)
+  - write this Wednesday morning
+
+Background (Chaman)
+
+Methods (Chris and Chaman, Chris lead)
+  - how we got to the models, our specific processes
+
+Results (Chris and Chaman, Chaman)
+  - put best model and what worked
+
+Conclusion (Chris)
+  - contains all of the answers
