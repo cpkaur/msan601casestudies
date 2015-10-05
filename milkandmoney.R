@@ -16,6 +16,8 @@ cor(milk[2:n])
 library(lmtest)
 resettest(model , power=2, type="regressor") # p-value = 0.00498
 resettest(model , power=3, type="regressor") # p-value = 0.004712
+resettest(model , power=2, type="fitted") # p-value = 0.00196
+resettest(model , power=3, type="fitted") # p-value = 0.03621
 
 # R2 = 0.9268
 model_1 <- lm(Mailbox ~ Class.III , data = milk[2:n])
@@ -113,6 +115,29 @@ model_19 <- lm(milk$Mailbox ~ milk$Class.IV + milk$Class.III +
                  milk$Butter:milk$Class.IV)
 summary(model_19)
 
+# R-squared:  0.9556, intercept, thrid power term negative
+model_20 <- lm(milk$Mailbox ~ milk$Class.IV + milk$Class.III + 
+                 I(milk$Class.IV^3) +
+                 milk$Butter:milk$Class.III)
+summary(model_20)
+
+# R-squared:  0.9649, intercept, third power term negative
+model_21 <- lm(milk$Mailbox ~ milk$Class.IV + milk$Class.III + 
+                 I(milk$Class.III^3) +
+                 milk$Butter:milk$Class.III)
+summary(model_21)
+
+# R-squared:  0.9613, intercept third power negative
+model_22 <- lm(milk$Mailbox ~ milk$Class.III + 
+                 I(milk$Class.III^3) +
+                 milk$Butter:milk$Class.III)
+summary(model_22)
+
+# R-squared:  0.9609, intercept third power negative
+model_23 <- lm(milk$Mailbox ~ milk$Class.III + 
+                 I(milk$Class.III^2) +
+                 milk$Butter:milk$Class.III)
+summary(model_23)
 
 #### best model:
 model_18 <- lm(milk$Mailbox ~ milk$Class.IV + milk$Class.III + 
@@ -126,3 +151,14 @@ Anova(model_18)
 vcov(model_18)  
 residualPlots(model_18)
 plot(model_18)
+hist(residuals(model_18))
+library("moments")
+skewness(residuals(model_18))
+qqline(residuals(model_18))
+plot(milk$Mailbox, residuals(model_18),xlab="X",
+     ylab="Residuals", main="Residual Plot", ylim = c(-10, 10))
+abline(h=0)
+
+library("car")
+ncvTest(model_18) # homoscedacity accepted p = 0.7391387 
+
