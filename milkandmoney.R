@@ -112,3 +112,17 @@ model_19 <- lm(milk$Mailbox ~ milk$Class.IV + milk$Class.III +
                  milk$Butter:milk$Class.III +
                  milk$Butter:milk$Class.IV)
 summary(model_19)
+
+
+#### best model:
+model_18 <- lm(milk$Mailbox ~ milk$Class.IV + milk$Class.III + 
+                 milk$Butter:milk$Class.III)
+summary(model_18)
+
+confint(model_18, level=0.95)
+anova(model_18)
+library(car)
+Anova(model_18)
+vcov(model_18)  
+residualPlots(model_18)
+plot(model_18)
