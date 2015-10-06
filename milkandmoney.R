@@ -140,25 +140,25 @@ model_23 <- lm(milk$Mailbox ~ milk$Class.III +
 summary(model_23)
 
 #### best model:
-model_18 <- lm(milk$Mailbox ~ milk$Class.IV + milk$Class.III + 
-                 milk$Butter:milk$Class.III)
-summary(model_18)
+model_18b <-lm(milk$Mailbox ~  milk$Class.III+
+                  milk$Butter)
+summary(model_18b)
 
-confint(model_18, level=0.95)
-anova(model_18)
+confint(model_18b, level=0.95)
+anova(model_18b)
 library(car)
-Anova(model_18)
-vcov(model_18)  
-residualPlots(model_18)
-plot(model_18)
-hist(residuals(model_18))
+Anova(model_18b)
+vcov(model_18b)  
+residualPlots(model_18b)
+plot(model_18b)
+hist(residuals(model_18b))
 library("moments")
-skewness(residuals(model_18))
-qqline(residuals(model_18))
-plot(milk$Mailbox, residuals(model_18),xlab="X",
+skewness(residuals(model_18b))
+qqline(residuals(model_18b))
+plot(milk$Mailbox, residuals(model_18b),xlab="X",
      ylab="Residuals", main="Residual Plot", ylim = c(-10, 10))
 abline(h=0)
 
 library("car")
-ncvTest(model_18) # homoscedacity accepted p = 0.7391387 
+ncvTest(model_18b) # homoscedacity rejected p = 0.04014451 
 
