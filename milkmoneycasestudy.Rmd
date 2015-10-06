@@ -1,0 +1,35 @@
+---
+title: "Milk and Money Case Study"
+author: "Chaman Preet Kaur and Chris Atterbury"
+date: "October 5, 2015"
+output: pdf_document
+---
+
+# Executive Summary
+This section is to be written last and contains a short (approx 250 words)
+summary of the case study as a whole.  
+
+# Background
+Summarizes the case study prompt. Contains any basic term definitions and
+prepares reader for discussion. Should propose basic question so that Methods
+section can dive right in.
+
+# Methods
+Details how we arrived at the models that we use. This is all about the process.
+Our thought processes should be detailed so that there is no question how we got
+to our models.
+
+# Results
+Details the actual model and how it worked. This needs to do all of the leg work
+so that the Conclusions section can roll through the answers to the questions.
+
+# Conclusions
+Integrate the answers to the questions as seamlessly as possible. The goal is
+that everything is built up to this point so that little justification is needed
+and other general conclusions can be included.
+
+# Appendix
+All of the R code and figures referenced throughout the above sections are
+included here. This is the section that we use to prove that we have done all of
+the work.
+
