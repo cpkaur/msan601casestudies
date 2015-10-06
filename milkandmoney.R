@@ -160,5 +160,13 @@ plot(milk$Mailbox, residuals(model_18b),xlab="X",
 abline(h=0)
 
 library("car")
-ncvTest(model_18b) # homoscedacity rejected p = 0.04014451 
+ncvTest(model_18b) # variance constant accepted as p = 0.04014451 
+
+######### Q3 #########
+mod <- lm(milk$Mailbox ~ milk$Class.III)
+summary(mod)
+confint(mod)
+rev_mod <- lm(milk$Class.III ~milk$Mailbox)
+summary(rev_mod)
+confint(rev_mod)
 
