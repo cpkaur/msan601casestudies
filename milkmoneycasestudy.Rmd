@@ -36,7 +36,7 @@ Payoff options are described in the following ways:
 # Methods
 ## Initial Considerations
 To help Gerard with his put option deliberations, we must analyze the data that
-he has collected. We have feature columns _Month_, _Mailbox_, _Class.Iv_,
+he has collected. We have feature columns _Month_, _Mailbox_, _Class.IV_,
 _Class.III_, _Butter_, _NFDM_. Please refer to __Codeblock 1__ in the _Appendix_
 to see the first six rows of this data set to get a feel for it. We will not use
 the _Month_ column since we are not doing time series analysis, but simply
@@ -69,10 +69,11 @@ head(milk)
 \begin{center} \textbf{Codeblock 2} \end{center}
 
 In _Codeblock 1_ we anticipated the need to convert the numeric feature columns.
-When being read into the data.frame `milk`, those columns are interpretated as
-factors because of the dollar signs. By reading them in as strings, we can use
-a regular expression to remove all of the dollar signs, then convert the
-columns from character to numeric types. See below for the code doing this.  
+When being read into the data.frame `milk`, those columns are normally 
+interpretated as factors because of the dollar signs. By reading them in as
+strings, we can use a regular expression to remove all of the dollar signs, then
+convert the columns from character to numeric types. See below for the code
+doing this.  
 
 ```{r}
 for (i in 2:length(milk)) {
