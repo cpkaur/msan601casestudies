@@ -28,7 +28,7 @@ target value for the mailbox at the top of the 95% confidence interval. Our
 chosen SLR model allows us to determine the strike price Class III dairy that 
 should generate the desired mailbox ($13.18). Finally, we include the 
 transaction and premium fees in our desired strike price so that, when those 
-are included, Gerard will still get his desired mailbox ($13.18 + fees). Thus,
+are included, Gerard will still get his desired mailbox ($13.18 + premium + transaction fees). Thus,
 he has protection against the volatility of dairy prices and can continue as a
 dairy farmer.  
 
@@ -121,18 +121,18 @@ The premium and transactional fees are constants and can be added to the derived
 # Conclusions
 
 ## General Conclusion
-The historic data helps Gerard make an informed decision about the put options he can buy. The linear regression models on the historic data help in predicting better strike prices for milk that can be bought from the Chicago Mercentile Exchange despite of the fact that California milk agencies calculate their prices differently. This contributes significantly to the financial success of small scale dairy farmers like Gerard. 
+The historic data provided in the case study helps Gerard make an informed decision about the put options he can buy. The linear regression models on the historic data help in predicting better strike prices for milk that can be bought from the Chicago Mercentile Exchange despite of the fact that California milk agencies calculate their prices differently. This contributes significantly to the financial success of small scale dairy farmers like Gerard. 
 
 ## Initial Considerations
 We started by looking at how SLR models work in predicting commodity values when the Mailbox is fixed at $12.50, since this is the value that garners Gerard's interest (see __Codeblock 9__ in the _Appendix_)(**Answer 1**). The values obtained for different products are as folllows:
 
-Class.IV = 11.9948
+Class.IV = $11.99
 
-Class.III = 13.16162
+Class.III = $13.16
 
-Butter = 1.383944
+Butter = $1.38
 
-NFDM = 0.5365911
+NFDM = $0.54
 
 Comparing these predicted values with similar actual values in the data set, we see that _Class.III_ and _Class.IV_ appear to correspond the best.   
 
@@ -166,7 +166,7 @@ that the net price will exceed $12.50 (**Answer 4**).
 All put option purchases include premium and transactional fees. Since these
 will come right out of the strike price, we just account for this when
 purchasing the option. Thus, we conclude that we want to purchase our Class III
-put option at a value of $13.18 + fees (**Answer 5**).  
+put option at a value of $13.18 + premium + transaction fees (**Answer 5**).  
 
 \pagebreak
 
