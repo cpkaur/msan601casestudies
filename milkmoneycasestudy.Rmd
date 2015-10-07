@@ -98,7 +98,7 @@ The premium and transactional fees are constants and can be added to the derived
 # Conclusions
 
 ## General Conclusion
-
+The historic data helps Gerard make an informed decision about the put options he can buy. The linear regression models on the historic data help in predicting better strike prices for milk that can be bought from the Chicago Mercentile Exchange despite of the fact that California milk agencies calculate their prices differently. This contributes significantly to the financial success of small scale dairy farmers like Gerard. 
 
 ## Initial Considerations
 We started by looking at how SLR models work in predicting commodity values when the Mailbox is fixed at $12.50, since this is the value that garners Gerard's interest (see __Codeblock 9__ in the _Appendix_)(**Answer 1**). The values obtained for different products are as folllows:
