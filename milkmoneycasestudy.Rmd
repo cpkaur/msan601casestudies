@@ -52,11 +52,23 @@ evaluate the $R^2$ value, mean squared error ($MSE$), and distribution of the
 error terms (see __Codeblock 4__ in the _Appendix_). Please see the _Results_ section for an explanation of what we found.  
 
 ## Choose put options
+We want to choose a put option that leaves Gerard 95% certain that he will
+be in the money if the mailbox price falls below $12.50. To obtain this 
+certainty, we construct a 95% Confidence Interval and choose the upper 
+bound as our target mailbox price (see __Codeblock 5__ in the _Appendix_). 
+Using our SLR model for the commodity most closely related to the mailbox price, we determine the strike price needed for the commodity(see
+__Codeblock 6__ in the _Appendix_).See the _Results_ section for an explanation
+of what we found.  
 
+## Final Adjustments for Fees
+Premium and trading fees are a part of purchasing dairy futures options. Thus,
+we finish our work with Gerard by accounting for those costs when determining
+the desired strike price. Since those fees are subtracted out right away, we
+simply increase our strike price so that, after the fees are subtracted, we
+still have the price of our commodity guaranteed at a high enough level to be
+in the money if the mailbox price falls below $12.50.  
 
-Details how we arrived at the models that we use. This is all about the process.
-Our thought processes should be detailed so that there is no question how we got
-to our models.  
+With our methods explained, we look at the results.  
 
 # Results
 Details the actual model and how it worked. This needs to do all of the leg work
@@ -78,7 +90,7 @@ head(milk)
 
 \begin{center} \textbf{Codeblock 2} \end{center}
 
-In _Codeblock 1_ we anticipated the need to convert the numeric feature columns.
+In __Codeblock 1__ we anticipated the need to convert the numeric feature columns.
 When being read into the data.frame `milk`, those columns are normally 
 interpretated as factors because of the dollar signs. By reading them in as
 strings, we can use a regular expression to remove all of the dollar signs, then
@@ -91,9 +103,6 @@ for (i in 2:length(milk)) {
   milk[[i]] <- as.numeric(milk[[i]])
 }
 ```  
-All of the R code and figures referenced throughout the above sections are
-included here. This is the section that we use to prove that we have done all of
-the work.  
 
 \begin{center} \textbf{Codeblock 3} \end{center}
 
@@ -116,6 +125,35 @@ print (summary(lm_butter))
 lm_nfdm <- lm(Mailbox ~ NFDM, data = milk)
 print (summary(lm_nfdm))
 ```  
+
+\begin{center} \textbf{Codeblock 5} \end{center}
+
+The code below uses the following equation to determine the upper bound of the
+95% Confidence Interval:  
+
+$\hat{Y}_h + t_{(1 - \alpha/2; n - 2)} s\{\hat{Y}_h\}$  
+
+```{r}
+s_2 <- anova(lm_classiii)[["Mean Sq"]][[2]]
+x_bar <- mean(milk[["Class.III"]])
+x_h <- (12.50 - coef(lm_classiii)[[1]]) / coef(lm_classiii)[[2]]
+num <- (x_h - x_bar) ^ 2
+denom <- sum((milk[["Class.III"]] - x_bar) ^ 2)
+val <- 1 / 41 + num / denom
+s <- s_2 * val
+mbox_upper <- 12.50 + s * qt(0.95, 39)
+print (mbox_upper)
+```  
+
+\begin{center} \textbf{Codeblock 6} \end{center}
+
+```{r}
+b_0 <- coef(lm_classiii)[[1]]
+b_1 <- coef(lm_classiii)[[2]]
+classiii_price <- (mbox_upper - b_0) / b_1
+print (classiii_price)
+```  
+
 
 ## Figures
 
