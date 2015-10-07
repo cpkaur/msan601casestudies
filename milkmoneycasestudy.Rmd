@@ -15,8 +15,22 @@ output:
 \pagebreak
 
 # Executive Summary
-This section is to be written last and contains a short (approx 250 words)
-summary of the case study as a whole. 
+Dairy farmers have to rely on fluctuating dairy prices for their business. 
+While they cannot control the price, they can buy futures options to mitigate
+the possibilities of sustaining damaging losses when prices drop. Gerard, a
+dairy farmer, wants a to choose a put option, which allows him to lock in a
+minimum price for the products on which he purchases it, for the commodity most
+closely related to his mailbox price with 95% confidence
+that it will be in the money (i.e. gain a profit) when his mailbox price drops
+below $12.50. By using simple linear regression (SLR) metrics and a correlation
+matrix we determine that Class III dairy most closely relates. We choose a
+target value for the mailbox at the top of the 95% confidence interval. Our
+chosen SLR model allows us to determine the strike price Class III dairy that 
+should generate the desired mailbox ($13.18). Finally, we include the 
+transaction and premium fees in our desired strike price so that, when those 
+are included, Gerard will still get his desired mailbox ($13.18 + fees). Thus,
+he has protection against the volatility of dairy prices and can continue as a
+dairy farmer.  
 
 \pagebreak
 
@@ -118,13 +132,13 @@ Class.III = 13.16162
 
 Butter = 1.383944
 
-NFDM = .5365911
+NFDM = 0.5365911
 
 Comparing these predicted values with similar actual values in the data set, we see that _Class.III_ and _Class.IV_ appear to correspond the best.   
 
 ## Determine the Predictor
 With this in mind, we see which predictor is actually most closely related to
-the mailbox price.(**Answer 2**) As detailed above in the _Methods_ and _Results_ sections,
+the mailbox price (**Answer 2**). As detailed above in the _Methods_ and _Results_ sections,
 the Class III dairy commodities appear to be the most closely related to the
 mailbox price (See __Codeblock 3__ for the correlations matrix, __Codeblock 4__
 for models, __Figure 1__ for the pairs plots, and __Figure 2__ for the scatter
@@ -138,7 +152,7 @@ Using the methods detailed above, we found that a strike price of $13.18 was
 the best for our put option so that the predicted mailbox price for the month
 is at the upper bound of our 95% Confidence Interval. Thus, we can be 95%
 confident that the option will be in the money if the mailbox price falls below
-$12.50(**Answer 3**). 
+$12.50 (**Answer 3**).  
 
 
 Specifically, if the mailbox price falls to $11.50, we see that the Class III
@@ -146,7 +160,7 @@ option should be in the money by about $1.29 and the mailbox price is predicted
 to be in the money by about $1.01 (this does not include fees; see
 __Codeblock 10__ in the _Appendix_ for code details). Based on the way that we
 came to our put option purchase price for Class III, we can be 95% confident
-that the net price will exceed $12.50 (**Answer 4**). 
+that the net price will exceed $12.50 (**Answer 4**).  
 
 ## Final Adjustments for Fees
 All put option purchases include premium and transactional fees. Since these
