@@ -7,12 +7,23 @@ output: pdf_document
 
 # Executive Summary
 This section is to be written last and contains a short (approx 250 words)
-summary of the case study as a whole.  
+summary of the case study as a whole. 
 
 # Background
-Summarizes the case study prompt. Contains any basic term definitions and
-prepares reader for discussion. Should propose basic question so that Methods
-section can dive right in.
+
+The financial success of dairy farms depends on the price of their milk.  The case study helps in understanding how milk prices are decided by the federal and state agencies, how payments are made and focuses on different options that farm owners can explore to hedge the price risk against market fluctuations.  The simplest approach is to purchase an option or a futures contract from the Chicago Mercantile Exchange on commodity futures that can ensure minimum floor value for their produce. An option on a futures contract is the right, but not the obligation, to buy or sell a futures contract at a specific price on or before an expiration date.
+
+The price a farm receives for its milk depends on various factors. What the dairy producers actually receive per hundredweight was called the mailbox price.  The farmer needs to determine which of the options available for trade offer the best hedge for his own milk price or his own mailbox price.  The federal order groups milk into four classes: Class I (defined as California Class 1), Class II (California Class 2 and Class 3), Class III (California Class 4b), and Class IV (California Class 4a). Options contracts allow hedgers to establish a price floor without giving up the opportunity to benefit from favorable price changes in the future. Buyers pay a price for the option called the premium up front. There are two different types of options:
+
+•  Put Options. A put option is the right to sell a futures contract at a certain price. 
+
+•	Call Options. A call option is the right to buy a futures contract at a certain price. 
+
+The price at which the buyer has the right to buy or sell a futures contract is known as the strike price or exercise price of the option. 
+Payoff options are described as at the money when the price of the underlying security (roughly) equals the strike price. 
+Payoff options are described as in the money; when the strike price is more than the market price of the underlying security, and a call option is in the money when the strike price is less than the market price of the underlying security. 
+Payoff options are described as out of the money when holders do not gain a profit if the option is exercised, so they allow the option to expire unused. The only loss is that of the initial premium and the trading costs of the initial transaction
+
 
 # Methods
 Details how we arrived at the models that we use. This is all about the process.
