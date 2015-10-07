@@ -108,7 +108,7 @@ With our methods explained, we look at the results.
 ## Determine the Predictor
 While looking at individual SLR models _Class.III_ dairy displays the highest multiple $R^2$ value of 0.9268, followed by _Class.IV_ dairy with 0.7121, _Butter_ with 0.6178 and _NFDM_ with 0.2961 (see __Codeblock 4__ in the _Appendix_). The results are in agreement with the correlation matrix and the pairs plot (see __Figure 1__ in the _Appendix_) which show highest correlation between _Mailbox_ and _Class.III_, which is 0.962720 (see __Codeblock 3__ in the _Appendix_). These results are again confirmed by the full multiple linear regression model (MLR) output (see __Codeblock 5__ in the _Appendix_). The p-value for _Class.III_ in the MLR model was the lowest ($2.73e^{-11}$) and the most significant.  
 
-In order to improve the model for _Class.III_ further, we also tried transforming the data by taking a log of _Class.III_, which did not make a significant difference to the Multiple $R^2$ and returned a value of 0.9462. Taking the log of _Mailbox_ instead returned a multiple $R^2$ of 0.8949 (see __Codeblock 7__, __Figure 2__, __Figure 3__, and __Figure 4__ in the _Appendix_). Thus, we considered the simple linear model without any transformation for calculation purposes. All these approaches confirmed hierarchical order that _Class.III_ was the most related to the mailbox price followed by _Class.IV_, _Butter_, and _NFDM_.  
+In order to improve the model for _Class.III_ further, we also tried transforming the data by taking a log of _Class.III_, which did not make a significant difference to the Multiple $R^2$ and returned a value of 0.9462. Taking the log of _Mailbox_ instead returned a multiple $R^2$ of 0.8949 (see __Codeblock 8__, __Figure 2__, __Figure 3__, and __Figure 4__ in the _Appendix_). Thus, we considered the simple linear model without any transformation for calculation purposes. All these approaches confirmed hierarchical order that _Class.III_ was the most related to the mailbox price followed by _Class.IV_, _Butter_, and _NFDM_.  
 
 ## Choose put options
 In an endeavour to choose the correct strike price, the construction of the 95% confidence interval using $\hat{Y}_h = 12.50$ yielded (12.48889, 12.51111) as the lower bound and upper bound values. We use the upper bound as our target mailbox price making Gerard 95% sure that he is in the money if mailbox price falls below $12.50. Using a mailbox price of 12.51111, we find the Class III dairy price from our previous SLR model developed while calculating the most closesly related commodity to the mailbox price. This yields a _Class.III_ price of $13.18.  
@@ -252,7 +252,7 @@ classiii_price <- (mbox_upper - b_0) / b_1
 print (classiii_price)
 ```  
 
-\begin{center} \textbf{Codeblock 7} \end{center}
+\begin{center} \textbf{Codeblock 8} \end{center}
 
 ```{r}
 lm_lclassiii <- lm(Mailbox ~ log(Class.III), data = milk)
