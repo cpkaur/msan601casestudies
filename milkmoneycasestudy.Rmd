@@ -12,7 +12,7 @@ summary of the case study as a whole.
 # Background
 The financial success of dairy farms depends on the price of their milk. The case study helps in understanding how milk prices are decided by the federal and state agencies, how payments are made and focuses on different options that farm owners can explore to hedge the price risk against market fluctuations. The simplest approach is to purchase an option or a futures contract from the Chicago Mercantile Exchange on commodity futures that can ensure minimum floor value for their produce. An option on a futures contract is the right, but not the obligation, to buy or sell a futures contract at a specific price on or before an expiration date.  
 
-The price a farm receives for its milk depends on various factors. What the dairy producers actually receive per hundredweight is called the mailbox price.  The farmer (Gerard in this case study) needs to determine which of the options available for trade offer the best hedge for his own milk price or his own mailbox price. The federal order groups milk into four classes: Class I (defined as California Class 1), Class II (California Class 2 and Class 3), Class III (California Class 4b), and Class IV (California Class 4a). Options contracts allow hedgers to establish a price floor without giving up the opportunity to benefit from favorable price changes in the future. Buyers pay a price for the option called the premium up front. There are two different types of options:  
+The price a farm receives for its milk depends on various factors. What the dairy producers actually receive per hundredweight is called the mailbox price. The farmer (Gerard in this case study) needs to determine which of the options available for trade offer the best hedge for his own milk price or his own mailbox price. The federal order groups milk into four classes: Class I (defined as California Class 1), Class II (California Class 2 and Class 3), Class III (California Class 4b), and Class IV (California Class 4a). Options contracts allow hedgers to establish a price floor without giving up the opportunity to benefit from favorable price changes in the future. Buyers pay a price for the option called the premium up front. There are two different types of options:  
 
 •  Put Options. The right to sell a futures contract at a certain price.  
 
@@ -49,15 +49,21 @@ plots of each variable against each other (see __Figure 1__ in the _Appendix_),
 the correlation matrix (see __Codeblock 3__ in the _Appendix_), and simple
 linear regression (SLR) models of each of the potential predictors. We will 
 evaluate the $R^2$ value, mean squared error ($MSE$), and distribution of the
-error terms (see __Codeblock 4__ in the _Appendix_). The results obtained through SLR models were also in conjugation with the p-values of individual variables in the full multiple linear regression model (see __Codeblock 5__ in the _Appendix_). Please see the _Results_ section for an explanation of what we found.  
+error terms (see __Codeblock 4__ in the _Appendix_). The results obtained
+through SLR models are viewed in conjunction with the p-values of individual
+variables in the full multiple linear regression model (see __Codeblock 5__ in
+the _Appendix_). Please see the _Results_ section for an explanation of what we
+found.  
 
 ## Choose put options
 We want to choose a put option that leaves Gerard 95% certain that he will
 be in the money if the mailbox price falls below $12.50. To obtain this 
 certainty, we construct a 95% Confidence Interval and choose the upper 
 bound as our target mailbox price (see __Codeblock 6__ in the _Appendix_). 
-Using our SLR model for the commodity most closely related to the mailbox price, we determine the strike price needed for the commodity(see
-__Codeblock 7__ in the _Appendix_).  See the _Results_ section for an explanation of what we found.  
+Using our SLR model for the commodity most closely related to the mailbox
+price, we determine the strike price needed for the commodity (see
+__Codeblock 7__ in the _Appendix_). See the _Results_ section for an
+explanation of what we found.  
 
 ## Final Adjustments for Fees
 Premium and trading fees are a part of purchasing dairy futures options. Thus,
@@ -67,21 +73,19 @@ simply increase our strike price so that, after the fees are subtracted, we
 still have the price of our commodity guaranteed at a high enough level to be
 in the money if the mailbox price falls below $12.50.  
 
-
 With our methods explained, we look at the results.  
 
 # Results
-
 ## Determine the Predictor
-While looking at individual SLR models __Class.III__ milk displays the highest __Multiple $R^2$__ value of __0.9268__, followed by __Class.IV__ milk of __0.7121__, __Butter__ of __0.6178__ and __NFDM__ of __0.2961__ (see __Codeblock 4__ in the _Appendix_). The results are in agreement with the correlation matrix and the pairs plot (see __Figure 1__ in the _Appendix_) which show highest __correlation__ between Mailbox and Class.III milk, which is __0.962720__ (see __Codeblock 3__ in the _Appendix_). These results are again confirmed by the full multiple linear regression model (MLR) output (see __Codeblock 5__ in the _Appendix_). The __p-value__ for Class.III milk in the MLR model was the __lowest ($2.73e^{-11}$)__ and the most significant.  
+While looking at individual SLR models _Class.III_ dairy displays the highest multiple $R^2$ value of 0.9268, followed by _Class.IV_ dairy with 0.7121, _Butter_ with 0.6178 and _NFDM_ with 0.2961 (see __Codeblock 4__ in the _Appendix_). The results are in agreement with the correlation matrix and the pairs plot (see __Figure 1__ in the _Appendix_) which show highest correlation between _Mailbox_ and _Class.III_, which is 0.962720 (see __Codeblock 3__ in the _Appendix_). These results are again confirmed by the full multiple linear regression model (MLR) output (see __Codeblock 5__ in the _Appendix_). The p-value for _Class.III_ in the MLR model was the lowest ($2.73e^{-11}$) and the most significant.  
 
-In order to improve the model for Class.III further, we also tried transforming the data by once by taking a log of Class.III which did not make a significant difference to the Multiple $R^2$ and returned a value of 0.9462 and another time by taking a log of the Mailbox which returned a Multiple $R^2$ of 0.8949 (see __Codeblock 7__, __Figure 2__ and __Figure 3__ and __Figure 4__ in the _Appendix_). Thus, we considered the simple linear model without any data transformation for calculation purposes. All these approaches confirmed heirarchical order that Class.III milk was the most related to the mailbox price followed by Class.IV, Butter and NFDM.  
+In order to improve the model for _Class.III_ further, we also tried transforming the data by taking a log of _Class.III_, which did not make a significant difference to the Multiple $R^2$ and returned a value of 0.9462. Taking the log of _Mailbox_ instead returned a multiple $R^2$ of 0.8949 (see __Codeblock 7__, __Figure 2__, __Figure 3__, and __Figure 4__ in the _Appendix_). Thus, we considered the simple linear model without any transformation for calculation purposes. All these approaches confirmed hierarchical order that _Class.III_ was the most related to the mailbox price followed by _Class.IV_, _Butter_, and _NFDM_.  
 
 ## Choose put options
-In an endeavour to choose the correct strike price, the construction of 95% confidence interval using $\hat{Y}_h = 12.50$ yielded __(12.48889, 12.51111)__ as the lower bound and upper bound values. We use the __upper bound__ as our __target mailbox price__ making Gerard 95% sure that he is in the money if mailbox price falls below $12.50. Using mailbox price as 12.51111, we find the Class.III milk price from our previous SLR model developed while calculating the most closesly related commodity to mailbox. This yields a __Class.III__ price of __$13.18__.  
+In an endeavour to choose the correct strike price, the construction of the 95% confidence interval using $\hat{Y}_h = 12.50$ yielded (12.48889, 12.51111) as the lower bound and upper bound values. We use the upper bound as our target mailbox price making Gerard 95% sure that he is in the money if mailbox price falls below $12.50. Using a mailbox price of 12.51111, we find the Class III dairy price from our previous SLR model developed while calculating the most closesly related commodity to the mailbox price. This yields a _Class.III_ price of $13.18.  
 
 ## Final Adjustments for Fees
-The premium and transactional fees are constants and can be added to the derived strike price in order to accomodate for extra cost while keeping the model in the money. Hence, we arrive at final strike price by adding the extra premium and transactional costs. 
+The premium and transactional fees are constants and can be added to the derived strike price in order to accomodate for extra cost while keeping the option in the money. Hence, we arrive at final strike price by adding the extra premium and transactional costs. 
 
 # Conclusions
 
