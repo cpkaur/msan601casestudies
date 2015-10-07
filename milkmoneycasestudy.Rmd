@@ -154,6 +154,15 @@ classiii_price <- (mbox_upper - b_0) / b_1
 print (classiii_price)
 ```  
 
+\begin{center} \textbf{Codeblock 7} \end{center}
+
+```{r}
+lm_lclassiii <- lm(Mailbox ~ log(Class.III), data = milk)
+print (summary(lm_lclassiii))
+
+lm_classiiil <- lm(log(Mailbox) ~ Class.III, data = milk)
+print (summary(lm_classiiil))
+```  
 
 ## Figures
 
@@ -161,5 +170,26 @@ print (classiii_price)
 
 ```{r echo=FALSE}
 pairs(milk[2:length(milk)], main = "Pairs Plots for Dairy Products")
+```  
+
+\begin{center} \textbf{Figure 2} \end{center}
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(car)
+scatterplot(Mailbox ~ Class.III, data = milk,
+            main = "Scatterplot of Mailbox vs. Class.III",
+            xlab = "Class.III Dairy Products Price (dollars)",
+            ylab = "Mailbox Price (dollars)",
+            boxplot = FALSE)
+```  
+
+\begin{center} \textbf{Figure 3} \end{center}
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+scatterplot(Mailbox ~ log(Class.III), data = milk,
+            main = "Scatterplot of Mailbox vs. log(Class.III)",
+            xlab = "log of Class.III Dairy Products Price (dollars)",
+            ylab = "Mailbox Price (dollars)",
+            boxplot = FALSE)
 ```  
 
