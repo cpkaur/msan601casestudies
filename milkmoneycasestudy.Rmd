@@ -49,15 +49,15 @@ plots of each variable against each other (see __Figure 1__ in the _Appendix_),
 the correlation matrix (see __Codeblock 3__ in the _Appendix_), and simple
 linear regression (SLR) models of each of the potential predictors. We will 
 evaluate the $R^2$ value, mean squared error ($MSE$), and distribution of the
-error terms (see __Codeblock 4__ in the _Appendix_). Please see the _Results_ section for an explanation of what we found.  
+error terms (see __Codeblock 4__ in the _Appendix_). The results obtained through SLR models were also in conjugation with the p-values of individual variables in the full multiple linear regression model (see __Codeblock 5__ in the _Appendix_). Please see the _Results_ section for an explanation of what we found.  
 
 ## Choose put options
 We want to choose a put option that leaves Gerard 95% certain that he will
 be in the money if the mailbox price falls below $12.50. To obtain this 
 certainty, we construct a 95% Confidence Interval and choose the upper 
-bound as our target mailbox price (see __Codeblock 5__ in the _Appendix_). 
+bound as our target mailbox price (see __Codeblock 6__ in the _Appendix_). 
 Using our SLR model for the commodity most closely related to the mailbox price, we determine the strike price needed for the commodity(see
-__Codeblock 6__ in the _Appendix_).See the _Results_ section for an explanation
+__Codeblock 7__ in the _Appendix_).See the _Results_ section for an explanation
 of what we found.  
 
 ## Final Adjustments for Fees
@@ -128,6 +128,13 @@ print (summary(lm_nfdm))
 
 \begin{center} \textbf{Codeblock 5} \end{center}
 
+```{r}
+lm_full <- lm(Mailbox ~ ., data = milk[-1])
+print (summary(lm_full))
+```  
+
+\begin{center} \textbf{Codeblock 6} \end{center}
+
 The code below uses the following equation to determine the upper bound of the
 95% Confidence Interval:  
 
@@ -145,7 +152,7 @@ mbox_upper <- 12.50 + s * qt(0.95, 39)
 print (mbox_upper)
 ```  
 
-\begin{center} \textbf{Codeblock 6} \end{center}
+\begin{center} \textbf{Codeblock 7} \end{center}
 
 ```{r}
 b_0 <- coef(lm_classiii)[[1]]
