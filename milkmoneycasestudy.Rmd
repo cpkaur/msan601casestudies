@@ -38,7 +38,13 @@ Payoff options are described in the following ways:
 To help Gerard with his put option deliberations, we must analyze the data that
 he has collected. We have feature columns _Month_, _Mailbox_, _Class.Iv_,
 _Class.III_, _Butter_, _NFDM_. Please refer to __Codeblock 1__ in the _Appendix_
-to see the first six rows of this data set to get a feel for it. 
+to see the first six rows of this data set to get a feel for it. We will not use
+the _Month_ column since we are not doing time series analysis, but simply
+viewing the data as a collection of measurements of the other feature columns.
+Also, we must remove the dollar signs from each of the other columns so that we
+can treat them as numeric columns. Please see __Codeblock 2__ in the _Appendix_
+for details on this approach, including the code itself.  
+
 Details how we arrived at the models that we use. This is all about the process.
 Our thought processes should be detailed so that there is no question how we got
 to our models.  
@@ -58,8 +64,22 @@ and other general conclusions can be included.
 ```{r}
 milk <- read.csv("41330727.csv", header = TRUE, stringsAsFactors = FALSE)
 head(milk)
-```
+```  
 
+\begin{center} \textbf{Codeblock 2} \end{center}
+
+In _Codeblock 1_ we anticipated the need to convert the numeric feature columns.
+When being read into the data.frame `milk`, those columns are interpretated as
+factors because of the dollar signs. By reading them in as strings, we can use
+a regular expression to remove all of the dollar signs, then convert the
+columns from character to numeric types. See below for the code doing this.  
+
+```{r}
+for (i in 2:length(milk)) {
+  milk[[i]] <- gsub("\\$", "", milk[[i]])
+  milk[[i]] <- as.numeric(milk[[i]])
+}
+```  
 All of the R code and figures referenced throughout the above sections are
 included here. This is the section that we use to prove that we have done all of
 the work.
