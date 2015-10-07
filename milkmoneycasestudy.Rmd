@@ -2,6 +2,9 @@
 title: "Milk and Money Case Study"
 author: "Chaman Preet Kaur and Chris Atterbury"
 date: "October 5, 2015"
+header-includes:
+- \usepackage{fancyhdr}
+- \pagestyle{fancy}
 output: 
   pdf_document:
     toc: true
