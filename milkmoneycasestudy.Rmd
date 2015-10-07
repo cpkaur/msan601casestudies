@@ -20,9 +20,13 @@ The price a farm receives for its milk depends on various factors. What the dair
 •	Call Options. A call option is the right to buy a futures contract at a certain price. 
 
 The price at which the buyer has the right to buy or sell a futures contract is known as the strike price or exercise price of the option. 
-Payoff options are described as at the money when the price of the underlying security (roughly) equals the strike price. 
-Payoff options are described as in the money; when the strike price is more than the market price of the underlying security, and a call option is in the money when the strike price is less than the market price of the underlying security. 
-Payoff options are described as out of the money when holders do not gain a profit if the option is exercised, so they allow the option to expire unused. The only loss is that of the initial premium and the trading costs of the initial transaction
+Payoff options are described in the following ways:
+
+• At the money when the price of the underlying security (roughly) equals the strike price. 
+
+• In the money; when the strike price is more than the market price of the underlying security, and a call option is in the money when the strike price is less than the market price of the underlying security. 
+
+• Out of the money when holders do not gain a profit if the option is exercised, so they allow the option to expire unused. The only loss is that of the initial premium and the trading costs of the initial transaction
 
 
 # Methods
