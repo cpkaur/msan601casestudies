@@ -8,6 +8,8 @@ header-includes:
 output: 
   pdf_document:
     toc: true
+    toc_depth: 2
+    number_sections: true
 ---
 
 \pagebreak
