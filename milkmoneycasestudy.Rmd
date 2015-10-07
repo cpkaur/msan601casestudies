@@ -2,12 +2,18 @@
 title: "Milk and Money Case Study"
 author: "Chaman Preet Kaur and Chris Atterbury"
 date: "October 5, 2015"
-output: pdf_document
+output: 
+  pdf_document:
+    toc: true
 ---
+
+\pagebreak
 
 # Executive Summary
 This section is to be written last and contains a short (approx 250 words)
 summary of the case study as a whole. 
+
+\pagebreak
 
 # Background
 The financial success of dairy farms depends on the price of their milk. The case study helps in understanding how milk prices are decided by the federal and state agencies, how payments are made and focuses on different options that farm owners can explore to hedge the price risk against market fluctuations. The simplest approach is to purchase an option or a futures contract from the Chicago Mercantile Exchange on commodity futures that can ensure minimum floor value for their produce. An option on a futures contract is the right, but not the obligation, to buy or sell a futures contract at a specific price on or before an expiration date.  
@@ -28,6 +34,8 @@ The price at which the buyer has the right to buy or sell a futures contract is 
 
 Here we use about three and a half years of data from a dairy farmer named Gerard to determine how he can purchase futures options that will be in the
 money if the mailbox price falls below $12.50.  
+
+\pagebreak
 
 # Methods
 ## Initial Considerations
@@ -70,6 +78,8 @@ in the money if the mailbox price falls below $12.50.
 
 With our methods explained, we look at the results.  
 
+\pagebreak
+
 # Results
 
 ## Determine the Predictor
@@ -83,18 +93,29 @@ In an endeavour to choose the correct strike price, the construction of 95% conf
 ## Final Adjustments for Fees
 The premium and transactional fees are constants and can be added to the derived strike price in order to accomodate for extra cost while keeping the model in the money. Hence, we arrive at final strike price by adding the extra premium and transactional costs. 
 
+\pagebreak
+
 # Conclusions
 
+## General Conclusion
+
+
 ## Initial Considerations
-We started by looking at how SLR models work in predicting commodity values
-when the Mailbox is fixed at $12.50, since this is the value that garners
-Gerard's interest (see __Codeblock 9__ in the _Appendix_). Comparing these
-predicted values with similar actual values in the data set, we see that
-_Class.III_ and _Class.IV_ appear to correspond the best.  
+We started by looking at how SLR models work in predicting commodity values when the Mailbox is fixed at $12.50, since this is the value that garners Gerard's interest (see __Codeblock 9__ in the _Appendix_)(**Answer 1**). The values obtained for different products are as folllows:
+
+Class.IV = 11.9948
+
+Class.III = 13.16162
+
+Butter = 1.383944
+
+NFDM = .5365911
+
+Comparing these predicted values with similar actual values in the data set, we see that _Class.III_ and _Class.IV_ appear to correspond the best.   
 
 ## Determine the Predictor
 With this in mind, we see which predictor is actually most closely related to
-the mailbox price. As detailed above in the _Methods_ and _Results_ sections,
+the mailbox price.(**Answer 2**) As detailed above in the _Methods_ and _Results_ sections,
 the Class III dairy commodities appear to be the most closely related to the
 mailbox price (See __Codeblock 3__ for the correlations matrix, __Codeblock 4__
 for models, __Figure 1__ for the pairs plots, and __Figure 2__ for the scatter
@@ -108,19 +129,21 @@ Using the methods detailed above, we found that a strike price of $13.18 was
 the best for our put option so that the predicted mailbox price for the month
 is at the upper bound of our 95% Confidence Interval. Thus, we can be 95%
 confident that the option will be in the money if the mailbox price falls below
-$12.50.  
+$12.50(**Answer 3**). 
+
+
 Specifically, if the mailbox price falls to $11.50, we see that the Class III
 option should be in the money by about $1.29 and the mailbox price is predicted
 to be in the money by about $1.01 (this does not include fees; see
 __Codeblock 10__ in the _Appendix_ for code details). Based on the way that we
 came to our put option purchase price for Class III, we can be 95% confident
-that the net price will exceed $12.50.  
+that the net price will exceed $12.50 (**Answer 4**). 
 
 ## Final Adjustments for Fees
 All put option purchases include premium and transactional fees. Since these
 will come right out of the strike price, we just account for this when
 purchasing the option. Thus, we conclude that we want to purchase our Class III
-put option at a value of $13.18 + fees.  
+put option at a value of $13.18 + fees (**Answer 5**).  
 
 \pagebreak
 
@@ -258,7 +281,7 @@ pairs(milk[2:length(milk)], main = "Pairs Plots for Dairy Products")
 \pagebreak
 \begin{center} \textbf{Figure 2} \end{center}
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.width = 5}
 library(car)
 scatterplot(Mailbox ~ Class.III, data = milk,
             main = "Scatterplot of Mailbox vs. Class.III",
@@ -269,7 +292,7 @@ scatterplot(Mailbox ~ Class.III, data = milk,
 
 \begin{center} \textbf{Figure 3} \end{center}
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.width = 5}
 scatterplot(Mailbox ~ log(Class.III), data = milk,
             main = "Scatterplot of Mailbox vs. log(Class.III)",
             xlab = "log of Class.III Dairy Products Price (dollars)",
@@ -279,7 +302,7 @@ scatterplot(Mailbox ~ log(Class.III), data = milk,
 
 \begin{center} \textbf{Figure 4} \end{center}
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.width = 5}
 scatterplot(log(Mailbox) ~ Class.III, data = milk,
             main = "Scatterplot of log(Mailbox) vs. Class.III",
             xlab = "Class.III Dairy Products Price (dollars)",
