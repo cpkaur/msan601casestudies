@@ -10,21 +10,24 @@ This section is to be written last and contains a short (approx 250 words)
 summary of the case study as a whole. 
 
 # Background
-The financial success of dairy farms depends on the price of their milk.  The case study helps in understanding how milk prices are decided by the federal and state agencies, how payments are made and focuses on different options that farm owners can explore to hedge the price risk against market fluctuations.  The simplest approach is to purchase an option or a futures contract from the Chicago Mercantile Exchange on commodity futures that can ensure minimum floor value for their produce. An option on a futures contract is the right, but not the obligation, to buy or sell a futures contract at a specific price on or before an expiration date.  
+The financial success of dairy farms depends on the price of their milk. The case study helps in understanding how milk prices are decided by the federal and state agencies, how payments are made and focuses on different options that farm owners can explore to hedge the price risk against market fluctuations. The simplest approach is to purchase an option or a futures contract from the Chicago Mercantile Exchange on commodity futures that can ensure minimum floor value for their produce. An option on a futures contract is the right, but not the obligation, to buy or sell a futures contract at a specific price on or before an expiration date.  
 
-The price a farm receives for its milk depends on various factors. What the dairy producers actually receive per hundredweight was called the mailbox price.  The farmer (Gerard in this case study) needs to determine which of the options available for trade offer the best hedge for his own milk price or his own mailbox price.  The federal order groups milk into four classes: Class I (defined as California Class 1), Class II (California Class 2 and Class 3), Class III (California Class 4b), and Class IV (California Class 4a). Options contracts allow hedgers to establish a price floor without giving up the opportunity to benefit from favorable price changes in the future. Buyers pay a price for the option called the premium up front. There are two different types of options:  
+The price a farm receives for its milk depends on various factors. What the dairy producers actually receive per hundredweight is called the mailbox price.  The farmer (Gerard in this case study) needs to determine which of the options available for trade offer the best hedge for his own milk price or his own mailbox price. The federal order groups milk into four classes: Class I (defined as California Class 1), Class II (California Class 2 and Class 3), Class III (California Class 4b), and Class IV (California Class 4a). Options contracts allow hedgers to establish a price floor without giving up the opportunity to benefit from favorable price changes in the future. Buyers pay a price for the option called the premium up front. There are two different types of options:  
 
-•  Put Options. A put option is the right to sell a futures contract at a certain price.  
+•  Put Options. The right to sell a futures contract at a certain price.  
 
-•	Call Options. A call option is the right to buy a futures contract at a certain price.  
+•	Call Options. The right to buy a futures contract at a certain price.  
 
 The price at which the buyer has the right to buy or sell a futures contract is known as the strike price or exercise price of the option.  Payoff options are described in the following ways:
 
-• At the money when the price of the underlying security (roughly) equals the strike price. 
+• At the money. When the price of the underlying security (roughly) equals the strike price. 
 
-• In the money; when the strike price is more than the market price of the underlying security, and a call option is in the money when the strike price is less than the market price of the underlying security. 
+• In the money. When holders do gain a profit if the option is exercised. For a put option, the strike price is more than the market price of the underlying security. For a call option, it is when the strike price is less than the market price of the underlying security. 
 
-• Out of the money when holders do not gain a profit if the option is exercised, so they allow the option to expire unused. The only loss is that of the initial premium and the trading costs of the initial transaction.  
+• Out of the money. When holders do not gain a profit if the option is exercised, so they allow the option to expire unused. The only loss is that of the initial premium and the trading costs of the initial transaction.  
+
+Here we use about three and a half years of data from a dairy farmer named Gerard to determine how he can purchase futures options that will be in the
+money if the mailbox price falls below $12.50.  
 
 # Methods
 ## Initial Considerations
@@ -36,7 +39,20 @@ the _Month_ column since we are not doing time series analysis, but simply
 viewing the data as a collection of measurements of the other feature columns.
 Also, we must remove the dollar signs from each of the other columns so that we
 can treat them as numeric columns. Please see __Codeblock 2__ in the _Appendix_
-for details on this approach, including the code itself.  
+for details on this approach, including the code itself. With the preprocessing
+done, we can evaluate the data.  
+
+## Determine the Predictor
+Gerard plans to purchase put options in just one commodity; the one that is 
+most closely related to his mailbox price. To determine this, we will look at 
+plots of each variable against each other (see __Figure 1__ in the _Appendix_),
+the correlation matrix (see __Codeblock 3__ in the _Appendix_), and simple
+linear regression (SLR) models of each of the potential predictors. We will 
+evaluate the $R^2$ value, mean squared error ($MSE$), and distribution of the
+error terms (see __Codeblock 4__ in the _Appendix_). Please see the _Results_ section for an explanation of what we found.  
+
+## Choose put options
+
 
 Details how we arrived at the models that we use. This is all about the process.
 Our thought processes should be detailed so that there is no question how we got
@@ -52,6 +68,7 @@ that everything is built up to this point so that little justification is needed
 and other general conclusions can be included.  
 
 # Appendix
+## Codeblocks  
 \begin{center} \textbf{Codeblock 1} \end{center}
 
 ```{r}
@@ -76,5 +93,35 @@ for (i in 2:length(milk)) {
 ```  
 All of the R code and figures referenced throughout the above sections are
 included here. This is the section that we use to prove that we have done all of
-the work.
+the work.  
+
+\begin{center} \textbf{Codeblock 3} \end{center}
+
+```{r}
+cor(milk[2:length(milk)])
+```  
+
+\begin{center} \textbf{Codeblock 4} \end{center}
+
+```{r}
+lm_classiv <- lm(Mailbox ~ Class.IV, data = milk)
+print (summary(lm_classiv))
+
+lm_classiii <- lm(Mailbox ~ Class.III, data = milk)
+print (summary(lm_classiii))
+
+lm_butter <- lm(Mailbox ~ Butter, data = milk)
+print (summary(lm_butter))
+
+lm_nfdm <- lm(Mailbox ~ NFDM, data = milk)
+print (summary(lm_nfdm))
+```  
+
+## Figures
+
+\begin{center} \textbf{Figure 1} \end{center}
+
+```{r echo=FALSE}
+pairs(milk[2:length(milk)], main = "Pairs Plots for Dairy Products")
+```  
 
