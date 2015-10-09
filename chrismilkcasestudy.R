@@ -70,3 +70,5 @@ summary(lm_nfdm)
 # Question 5
 # if we want 13.34, then just purchase at 13.34 + premium and trading fees
 # (e.g. 13.34+.45=13.89)
+
+
