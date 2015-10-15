@@ -1,0 +1,33 @@
+---
+title: "Nils Baker Case Study"
+author: "Chaman Preet Kaur and Chris Atterbury"
+date: "October 15, 2015"
+header-includes:
+- \usepackage{fancyhdr}
+- \pagestyle{fancy}
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+# Executive Summary
+This section is to be written last and contains a short (approx 250 words)
+summary of the case study as a whole.  
+
+# Background
+Summarizes the case study prompt. Contains any basic term definitions and
+prepares reader for discussion. Should propose basic question so that the Models
+section can dive right in.  
+
+# Models
+Details how we arrived at the models that we tried and how they worked. Include details about both the processes and the model to which they led. Our thought processes should be detailed so that there is no question how we got to our models. This needs to do all of the leg work so that the Conclusions section can focus on the actual meaning of the model. _This section should include subsections for each model with two hashes and then further subsectioniong using three hashes for each part of the model discussion._  
+
+# Conclusions
+The goal is that everything is built up to this point so that little we can just plow right into the meaning of the model. Other general conclusions can be included.  
+
+# Appendix
+
+
+
