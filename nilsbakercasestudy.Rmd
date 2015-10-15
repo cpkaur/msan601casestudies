@@ -22,12 +22,68 @@ prepares reader for discussion. Should propose basic question so that the Models
 section can dive right in.  
 
 # Models
+## Initial Considerations
+```{r echo=FALSE}
+d <- read.csv("41330723.csv", header = TRUE, stringsAsFactors = FALSE)
+d <- d[1:120, ] # last two rows contain no data
+names(d) <- c("ID", "Total.Households", "Accounts", "Footprint")
+
+for (i in 2:3) {
+  d[[i]] <- gsub(",", "", d[[i]])
+  d[[i]] <- as.numeric(d[[i]])
+}
+d[["Footprint"]][d[["Footprint"]] == "Outside"] <- 0
+d[["Footprint"]][d[["Footprint"]] == "Inside"] <- 1
+d[["Footprint"]] <- as.numeric(d[["Footprint"]])
+d[["ID"]] <- as.numeric(d[["ID"]])
+```  
+The data that we have received to pursue Nils Baker's hypothesis includes four columns. Initially, they are _ID_, _Total.Households.in.Area_, _Households.with.Account_, and _Inside.Outside.Footprint_. First, we drop the
+last two rows of the data set because they are empty and change the column names to _ID_, _Total.Households_, _Accounts_, and _Footprint_, respectively. Next, further preprocessing of the data is performed so that we have numeric data (see __Additional Codeblock 1__ in the _Appendix_ for the code used to do this).  
+The first column, _ID_, is identical to the row number and, thus, will not be considered in this case study. Each row itself is a separate Metropolitan Statistical Area (MSA). For our purposes, we need only understand that each row contains a diferent geographic region. The next two columns, _Total.Households_ and _Accounts_, contain the number of total households and the number of those households that have a checking account with the bank. The last column, _Footprint_, was originally coded with either "Inside" or "Outside." A region was considered "Inside" if there was both a physical bank location and an ATM in the region. This was recoded as 1 for easier analysis of the data. A region was considered "Outside" if there was not a physical bank location and only an ATM in the region. This was recoded as 0.  
+With the data in a usable form, we can now view the correlation matrix to get an initial feel for the relationships amongst the variables.  
+```{r echo=FALSE}
+cor(d)
+```  
+We see  
+
+## Procedure
+The goal in this case study, as stated by Nils Baker, is to ascertain whether or not the presence of a physical bank in a region increases the likelihood of a given household possessing a checking account. We will start with Simple Linear Regression (SLR) models, before considering more complex Multiple Linear Regression (MLR) models.  
+
+## SLR Models
+
 Details how we arrived at the models that we tried and how they worked. Include details about both the processes and the model to which they led. Our thought processes should be detailed so that there is no question how we got to our models. This needs to do all of the leg work so that the Conclusions section can focus on the actual meaning of the model. _This section should include subsections for each model with two hashes and then further subsectioniong using three hashes for each part of the model discussion._  
 
 # Conclusions
 The goal is that everything is built up to this point so that little we can just plow right into the meaning of the model. Other general conclusions can be included.  
 
 # Appendix
+## Additional Codeblock
 
+\begin{center} \textbf{Additional Codeblock 1} \end{center}
 
+```{r eval=FALSE}
+d <- read.csv("41330723.csv", header = TRUE, stringsAsFactors = FALSE)
+d <- d[1:120, ] # last two rows contain no data
+names(d) <- c("ID", "Total.Households", "Accounts", "Footprint")
+
+for (i in 2:3) {
+  d[[i]] <- gsub(",", "", d[[i]])
+  d[[i]] <- as.numeric(d[[i]])
+}
+d[["Footprint"]][d[["Footprint"]] == "Outside"] <- 0
+d[["Footprint"]][d[["Footprint"]] == "Inside"] <- 1
+d[["Footprint"]] <- as.numeric(d[["Footprint"]])
+d[["ID"]] <- as.numeric(d[["ID"]])
+```  
+```{r}
+head(d)
+```  
+
+## Additional Figures
+
+\begin{center} \textbf{Additional Figure 1} \end{center}
+
+```{r echo=FALSE}
+pairs(d[2:length(d)], main = "Pairs Plots for Nils Baker Data")
+```  
 
