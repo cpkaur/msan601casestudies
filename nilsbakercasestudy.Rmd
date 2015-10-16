@@ -7,9 +7,11 @@ header-includes:
 - \pagestyle{fancy}
 output: 
   pdf_document:
-    toc: true
     toc_depth: 2
     number_sections: true
+    includes:
+      geometry: margin=1in
+      fontsize: 14pt
 ---
 
 # Executive Summary
@@ -17,9 +19,8 @@ This section is to be written last and contains a short (approx 250 words)
 summary of the case study as a whole.  
 
 # Background
-Summarizes the case study prompt. Contains any basic term definitions and
-prepares reader for discussion. Should propose basic question so that the Models
-section can dive right in.  
+
+The financial success of a bank depends on its total holdings, which in turn depends on the size of its customer base. The case study revolves around Nils Baker, vice president of a regional retail bank in US. Based on the feedback received from a promising customer, he develops a hypothesis that having more physical branches motivates people to open a checking account with the bank.  In order to make a strategic business plan surrounding this hypothesis, it needs to proven statistically. The data available for analysis includes: total households in a particular area, total number of checking accounts with the bank in that area and the presence of physical branch or an ATM in that area.  Setting up a physical branch involves a lot of investment and maintenance fee but if it can be proven to help gain more checking accounts in turn expanding the customer base and adding to the the total holdings, it can be a good business move to tap more customers in potential areas. 
 
 # Models
 ## Initial Considerations

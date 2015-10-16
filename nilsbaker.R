@@ -37,6 +37,17 @@ summary(m_4)
 percentage <- nils$Households.with.Account/nils$Total.Households.in.Area
 
 nils <- cbind(nils, percentage)
-
-m_5 <- lm(nils$percentage ~ nils$Inside.Outside.Footprint, data = nils)
+names(nils)[1] <- "total_h"
+names(nils)[2] <- "account_h"
+names(nils)[3] <- "i_o"
+m_5 <- lm(nils$percentage ~ nils$i_o, data = nils)
 summary(m_5)
+
+## exploring things 
+cor(nils)
+i_o.freq = table(nils$i_o)
+barplot(i_o.freq)
+boxplot(nils$percentage ~ nils$i_o)
+by(nils$percentage, nils$i_o, summary)
+mosaicplot(table(nils$percentage, nils$i_o))
+barplot(table(nils$i_o))
