@@ -14,6 +14,7 @@ d[["Footprint"]][d[["Footprint"]] == "Inside"] <- 1
 head(d[["Footprint"]])
 d[["Footprint"]] <- as.numeric(d[["Footprint"]])
 d[["ID"]] <- as.numeric(d[["ID"]])
+d[["Accts.Hsehld"]] <- d[["Accounts"]] / d[["Total.Households"]]
 cor(d)
 
 # SLR models
