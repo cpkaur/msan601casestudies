@@ -46,12 +46,28 @@ With the data in a usable form, we can now view the correlation matrix to get an
 ```{r echo=FALSE}
 cor(d)
 ```  
-We can ignore the values involving `ID` since this is basically just a running counter of which number region we see. Its correlation with `Total.Households` is based on the fact that the data set's observations are organized by the number of households in the region with the largest first. We see that `Accounts` has a strong correlation
+We can ignore the values involving `ID` since this is basically just a running counter of which number region we see. Its correlation with `Total.Households` is based on the fact that the data set's observations are organized by the number of households in the region with the largest first. We see that `Accounts` has a strong correlation with `Total.Households`, which is reasonable since we expect that regions with more households will have more accounts, just based on volume. Also, this explains the negative correlation between `Accounts` and `ID`. The numbers indicate what we would expect for `Footprint`; the correlations with the households and accounts do not show anything. That is, the locations of physical banks were not chosen based on the number of households or accounts in a region. This  correlation matrix ends up showing us that trying to predict `Accts.Hsehld` may be difficult, but hopefully combining a few features will help. Please see __Additional Figure 1__ in the _Appendix_ for the pairs plot that shows these relationships graphically.  
 
 ## Procedure
 The goal in this case study, as stated by Nils Baker, is to ascertain whether or not the presence of a physical bank in a region increases the likelihood of a given household possessing a checking account. We will start with Simple Linear Regression (SLR) models, before considering more complex Multiple Linear Regression (MLR) models.  
 
 ## SLR Models
+### Predicting Number of Accounts
+We will start by evaluating SLR models for `Accounts`. Even though these models may be more difficult to interpret in terms of Nils Baker's hypothesis, if we find an especially good model, then we may make an exception. The summaries of these three models are below.  
+```{r echo=FALSE}
+lm_1 <- lm(Accounts ~ Total.Households, data = d)
+summary(lm_1)
+
+lm_2 <- lm(Accounts ~ Footprint, data = d)
+summary(lm_2)
+
+lm_3 <- lm(Accounts ~ Accts.Hsehld, data = d)
+summary(lm_3)
+```  
+Considering the results of the correlation matrix above, none of these results are particularly surprising. The total number of households in a region proves to be a good predictor of the number of accounts in the region. The coefficient of determination, denoted $R^2$, is high, so we know that a significant amount of the variation in `Accounts` is explained by `Total.Households`. Additionally, the p-value for the coefficient and the model are significant. However, this model only serves to highlight the drawbacks of choosing `Accounts` as the response variable since we can only determine that regions with more households have more accounts. We can say nothing about how likely a given household is to have an account.  
+The other two models, which use `Footprint` and `Accts.Hsehld`, are exceptionally poor. `Footprint` is the feature that most interests us since it tells us if a physical bank is in the region. While we would have been surprised to see the presence of a physical bank be a good predictor of the gross number of accounts, seeing that it is not fits in with what we would expect. Now we will look at SLR models predicting the number of accounts per household in a region.  
+
+### Predicting Accounts per Household
 
 
 Details how we arrived at the models that we tried and how they worked. Include details about both the processes and the model to which they led. Our thought processes should be detailed so that there is no question how we got to our models. This needs to do all of the leg work so that the Conclusions section can focus on the actual meaning of the model. _This section should include subsections for each model with two hashes and then further subsectioniong using three hashes for each part of the model discussion._  
