@@ -56,6 +56,39 @@ summary(lm(Accts.Hsehld ~ . - ID + Footprint:Accounts +
              Footprint:I(Total.Households^2),
            data = d))
 
+lm_maybe <- lm(Accts.Hsehld ~ . - ID + Footprint:Accounts +
+                 Total.Households:Footprint + I(Accounts^2) +
+                 I(Total.Households^2) + Footprint:I(Accounts^2) +
+                 Footprint:I(Total.Households^2),
+               data = d)
+
+lm_lmaybe <- lm(log(Accts.Hsehld) ~ . - ID + Footprint:Accounts +
+                  Total.Households:Footprint + I(Accounts^2) +
+                  I(Total.Households^2) + Footprint:I(Accounts^2) +
+                  Footprint:I(Total.Households^2),
+                data = d)
+lm_10 <- lm(log(Accts.Hsehld) ~ . - ID + log(Accounts) + log(Total.Households) +
+              Footprint:Accounts + Total.Households:Footprint, data = d)
+
+lm_11 <- lm(log(Accts.Hsehld) ~ . - ID + log(Accounts) + log(Total.Households) +
+              Total.Households:Footprint, data = d)
+
+lm_12 <- lm(log(Accts.Hsehld) ~ . - ID + log(Accounts) + log(Total.Households),
+            data = d)
+
+lm_13 <- lm(Accounts ~ Total.Households + Footprint +
+              Total.Households:Footprint, data = d)
+
+lm_14 <- lm(Accounts ~ Total.Households + Footprint + I(Total.Households^2) +
+              Total.Households:Footprint, data = d)
+
+lm_15 <- lm(I(Accounts^2) ~ Total.Households + Footprint +
+              I(Total.Households^2) + Total.Households:Footprint, data = d)
+
+shapiro.test(residuals(lm_lmaybe))
+residualPlot(lm_lmaybe)
+qqPlot(residuals(lm_lmaybe), distribution = "norm")
+
 summary(lm(Accts.Hsehld ~ Footprint + Total.Households +
              Footprint:Total.Households + I(Total.Households^2) +
              Footprint:I(Total.Households^2),
