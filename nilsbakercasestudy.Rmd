@@ -167,28 +167,33 @@ Accounts ~ Total.Households + Footprint
         + Total.Households:Footprint     
         + I(Total.Households^2):Footprint   0.8934   0.8887  
 
-Looking at the values for all these models we find `Accounts ~ Total.Households + Footprint + Total.Households:Footprint` as the most parsemonius model with high $R^2$ and $R^2_a$ values. Thus we choose it to be the best model that can explain the data. There are some common problems with all the models listed in table 3 as the they are not normal and the residual plots do not look very convincing for any of these. However, with the given amount of data this is the best we could come up with. 
+Looking at the values for all these models we find `Accounts ~ Total.Households + Footprint + Total.Households:Footprint` as the most parsemonius model with high $R^2$ and $R^2_a$ values. Thus we choose it to be the best model that can explain the data. There are some common problems with all the models listed in __Figure 6__ as the they are not normal and the residual plots do not look very convincing for any of these (see __Figures 6__ and __Figure 7__ below, where this is discussed in more detail). However, the given the number of observations and potential predictors, we give this model our attention.  
 
 ## Results
+The best model that we could generate from the given data was `Accounts ~ Total.Households + Footprint + Total.Households:Footprint`.
 
-The best model that we could generate from the given data was `Accounts ~ Total.Households + Footprint + Total.Households:Footprint`. On plotting the residuals and looking for normality of the data we find that the data is not normal but error terms do not show nearly constant variance:  
+### Homoskedasticity and Normality of error terms
+On plotting the residuals and looking for the normality of the residuals, we find that the data is not normal and the error terms do not quite show constant variance.  
 
 \begin{center} \textbf{Figure 7} \end{center}
 
 ```{r echo=FALSE}
 library(car)
 residualPlots(lm(Accounts ~ Total.Households + Footprint + 
-                  Total.Households:Footprint, data = d))
+                  Total.Households:Footprint, data = d),
+              main = "Residual Plots for Bank Account Prediction")
 ```  
 
 \begin{center} \textbf{Figure 8} \end{center}
 
 ```{r echo=FALSE}
 qqPlot(residuals(lm(Accounts ~ Total.Households + Footprint + 
-                  Total.Households:Footprint, data = d)), distribution = "norm")
-```
-
-The variance of the error terms is further confirmed by using the Breusch-Pagan test which results in the conclusion that variance of the error terms is constant.  
+                  Total.Households:Footprint, data = d)),
+       distribution = "norm",
+       main = "Normal QQ-Plot for Bank Account Prediction",
+       xlab = "Normal Quantiles", ylab = "Residuals")
+```  
+The non-constant variance of the error terms is further confirmed by using the Breusch-Pagan test. It shows that we must reject the null hypothesis that error terms are homoskedastic (i.e. have constant variance).  
 
 \begin{center} \textbf{Figure 9} \end{center}
 
@@ -196,12 +201,10 @@ The variance of the error terms is further confirmed by using the Breusch-Pagan 
 ncvTest(lm(Accounts ~ Total.Households + Footprint + 
                   Total.Households:Footprint, data = d))
 qchisq(.95, 1)
-```
+```  
 
-The relatively low p - value of the footprint variable is what catches our attention and has the key role in determinig if having a physical branch motivates people to open checking accounts with the bank.
-
-Details how we arrived at the models that we tried and how they worked. Include details about both the processes and the model to which they led. Our thought processes should be detailed so that there is no question how we got to our models. This needs to do all of the leg work so that the Conclusions section can focus on the actual meaning of the model. _This section should include subsections for each model with two hashes and then further subsectioniong using three hashes for each part of the model discussion._  
-
+### Significance of Footprint
+The p-value of `Footprint` is relatively low at 0.063 (see `lm_9` in __Codeblock 8__ of the _Appendix_ for the full summary of the model). While not below the standard $\alpha = 0.05$, it is very close and the interaction term with `Footprint` is extremely significant with a p-value of 1.48e-12. The other models that we tried tended to show this pattern as well (see __Codeblock 8__ in the _Appendix_ for the full summary of each model). That is, `Footprint` is not insignificant, but its real value is in its interaction terms. This plays a key role in determinig if having a physical branch motivates people to open checking accounts with the bank.  
 
 # Conclusions
 The goal is that everything is built up to this point so that little we can just plow right into the meaning of the model. Other general conclusions can be included.  
