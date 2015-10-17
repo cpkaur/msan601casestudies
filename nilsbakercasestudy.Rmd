@@ -57,46 +57,40 @@ The goal in this case study, as stated by Nils Baker, is to ascertain whether or
 
 ## SLR Models
 ### Predicting Number of Accounts
-We will start by evaluating SLR models for `Accounts`. Even though these models may be more difficult to interpret in terms of Nils Baker's hypothesis, if we find an especially good model, then we may make an exception. The summaries of these three models are below.  
+We will start by evaluating SLR models for `Accounts`. Even though these models may be more difficult to interpret in terms of Nils Baker's hypothesis, if we find an especially good model, then we may make an exception. The $R^2$ values obtained for these three models were as follows:
 
-\begin{center} \textbf{Figure 2} \end{center}
-
-```{r echo=FALSE}
-lm_1 <- lm(Accounts ~ Total.Households, data = d)
-summary(lm_1)
-
-lm_2 <- lm(Accounts ~ Footprint, data = d)
-summary(lm_2)
-
-lm_3 <- lm(Accounts ~ Accts.Hsehld, data = d)
-summary(lm_3)
-```  
+  Model                      |  $R^2$    | $Adjusted R^2$  
+ ----------------------------|-----------|---------------
+  Accounts ~ Total.Households| 0.8303    |   0.8289  
+  Accounts ~ Footprint       | 0.04715   |   0.03907  
+  Accounts ~ Accts.Hsehld    | 0.00514   |  -0.003292   
+ 
+(see __Additional Codeblock 2__ in the _Appendix_ for the code )  
 Considering the results of the correlation matrix above, none of these results are particularly surprising. The total number of households in a region proves to be a good predictor of the number of accounts in the region. The coefficient of determination, denoted $R^2$, is high, so we know that a significant amount of the variation in `Accounts` is explained by `Total.Households`. Additionally, the p-value for the coefficient and the model are significant. However, this model only serves to highlight the drawbacks of choosing `Accounts` as the response variable since we can only determine that regions with more households have more accounts. We can say nothing about how likely a given household is to have an account.  
 The other two models, which use `Footprint` and `Accts.Hsehld`, are exceptionally poor. `Footprint` is the feature that most interests us since it tells us if a physical bank is in the region. While we would have been surprised to see the presence of a physical bank be a good predictor of the gross number of accounts, seeing that it is not fits in with what we would expect. Now we will look at SLR models predicting the number of accounts per household in a region.  
 
 ### Predicting Accounts per Household
-Now we look at how each of the individual potential predictors does with `Accts.Hsehld` as the response variable. By using this response variable, we can easily understand which potential predictors are involved in determining the likelihood of a given household having an account with the bank. The summaries of these three models are below.  
+Now we look at how each of the individual potential predictors does with `Accts.Hsehld` as the response variable. By using this response variable, we can easily understand which potential predictors are involved in determining the likelihood of a given household having an account with the bank. The $R^2$ values obtained for these three models were as follows:  
 
-\begin{center} \textbf{Figure 3} \end{center}
+  Model                          |  $R^2$    | $Adjusted R^2$  
+ --------------------------------|-----------|---------------
+  Accts.Hsehld ~ Total.Households| 0.007543  |  -0.0008672  
+  Accts.Hsehld ~ Accounts        | 0.00514   |  -0.003292  
+  Accts.Hsehld ~ Footprint       | 0.02321   |   0.01493 
 
-```{r echo=FALSE}
-lm_4 <- lm(Accts.Hsehld ~ Total.Households, data = d)
-summary(lm_4)
-
-lm_5 <- lm(Accts.Hsehld ~ Accounts, data = d)
-summary(lm_5)
-
-lm_6 <- lm(Accts.Hsehld ~ Footprint, data = d)
-summary(lm_6)
-```  
+(see __Additional Codeblock 3__ in the _Appendix_ for the code ) 
 Once again, these results are aligned with those from the correlation matrix. All three SLR models are quite poor. Their respective $R^2$ values are very low, and their respective p-values are high. With a higher p-value we cannot reject the null hypothesis these models are just as good as the average at predicting `Accts.Hsehld`. Interestingly, the $R^2$ and p-values are best, albeit still terrible, for the SLR that used `Footprint`. Depending on what we find when looking at MLR models, Nils Baker's hypothesis still has a chance at being correct.  
-Now we will turn our attention to MLR models to try to find one that does a decent job at predicting `Accts.Hsehld`.  
+Now we will turn our attention to MLR models to try to find one that does a decent job at predicting `Accts.Hsehld`. 
 
 ## MLR Models
-### Initial Considerations
+
+We feel that the `Accts.Hsheld` is a more appropriate response variable than `Accounts` since it is a ratio of total accounts to the total number of households in that area. Thus, we explor MLR models with `Accts.Hsheld` first. 
+
+### Models with Accts.Hsheld as response variable
+#### Initial Considerations
 MLR models can get quite complicated. We can look at how different terms interact with each other, quadratic terms, etc. It is imperative that we keep Nils Barker's hypothesis in mind as we look at MLR models. We want to see how well `Footprint` predicts `Accts.Hsehld`. Thus, we will focus on generating models that will help us answer that question.  
 
-### Ramsey RESET Test
+#### Ramsey RESET Test
 The Ramsey RESET Test attempts to determine if quadratic terms add value to a model. It does not take into consideration the interaction between quadratic terms and other variables, so this will only help to give us an intuition. The results of the test are below.  
 
 \begin{center} \textbf{Figure 4} \end{center}
@@ -104,34 +98,61 @@ The Ramsey RESET Test attempts to determine if quadratic terms add value to a mo
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(lmtest)
 resettest(lm(Accts.Hsehld ~ Accounts + Total.Households, data = d), power = 2)
+resettest(lm(Accts.Hsehld ~ Accounts + Total.Households + Footprint, data = d), power = 2)
 ```  
 We see that the p-value is about as bad as is possible at 0.9965. This test was run for just possible quadratic terms. We will not evaluate any higher order terms with such a poor value. We did not run the test with `Footprint` in the model because a qualitative variable cannot be squared. Thus, we expect that quadratic terms will be most valuable for their interactions, if at all. Now we turn our attention to actual MLR models.  
 
-### Footprint with one other term
+We see that the p-value is 0.8434, which implies that there are no higher oder values. 
+
+#### Footprint with one other term
 In the correlation matrix (__Figure 1__ above) we saw that `Accounts` and `Total.Households` have a very high correlation (0.911). Thus, we will explore models with only one or the other.  
-The code and summaries for each of the models explored can be found in __Additional Codeblock 2__ in the _Appendix_. However, they will not be displayed here because none offered promising results. $R^2$ only goes up to 0.02741. When $R^2$ is adjusted to account for the number of predictors, $R^2_a$ only gets up to a miniscule 0.008395. With these dispiriting results we turn our attention to MLR models with both `Accounts` and `Total.Households`.  
+The code and summaries for each of the models explored can be found in __Additional Codeblock 4__ in the _Appendix_. However, they will not be displayed here because none offered promising results. $R^2$ only goes up to 0.119. When $R^2$ is adjusted to account for the number of predictors, $R^2_a$ only gets up to a miniscule 0.08036 . With these dispiriting results we turn our attention to MLR models with both `Accounts` and `Total.Households`.  
 
-### Using all potential predictors
-We know that error cannot be unexplained. Thus, we can look at the $R^2$ value with all possible quadratic and interaction terms to get a sense of just how high we can hope to get that value when building our model. Additionally, we can compare $R^2_a$ to make sure that our chosen model improves on this. See below.  
+#### Using all potential predictors
+We know that error cannot be unexplained. Thus, we can look at the $R^2$ value with all possible quadratic and interaction terms to get a sense of just how high we can hope to get that value when building our model and then start to delete variables that are insignificant. Additionally, we can compare $R^2_a$ to make sure that our chosen model improves on this. See __Additional Codeblock 5__ in the _Appendix_.  
+For the model $Accts.Hsehld ~ (. - ID + I(Accounts^2) + I(Total.Households^2))^2$ we get an $R^2$ value of 0.6141 and $R^2_a$ of 0.5585. On comparing this model with a less bloated model    
+$Accts.Hsehld ~ . - ID + Footprint:Accounts + Total.Households:Footprint + I(Accounts^2) + I(Total.Households^2) + Footprint:I(Accounts^2) + Footprint:I(Total.Households^2)$, we find all coefficients are significant at the $\alpha = 0.05$ level. That is, we can be at least 95% confident in the significance of these coefficients. $R^2 = 0.5706$ and $R^2_a = 0.5354$. These values are close to the obese one above. Also, the interaction terms with `Footprint` are all the most significant ones. 
 
-\begin{center} \textbf{Figure 5} \end{center}
+The low $R^2$ values forced us to reconsider our response variable. We had previously seen that Accounts when regressed on Total.Households gave the best $R^2$ value so far of 0.8303. Thus, we further explored models with Accounts as the response variable. 
 
-```{r echo=FALSE}
-lm_all <- lm(Accts.Hsehld ~ (. - ID + I(Accounts^2) + I(Total.Households^2))^2,
-             data = d)
-summary(lm_all)
+### Models with Accounts as response variable
+#### Ramsey RESET Test
+We first check if there is a possibility of a higher oder term with the Ramsey Test
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(lmtest)
+resettest(lm(Accounts~ Total.Households + Footprint, data = d), power = 2)
+resettest(lm(Accounts~ Total.Households + Footprint, data = d), power = 3)
 ```  
-We find that $R^2 = 0.6141$ and $R^2_a = 0.5585$. Now we can evaluate how less bloated models compare.  
-```{r echo=FALSE}
-summary(lm(Accts.Hsehld ~ . - ID + Footprint:Accounts +
-             Total.Households:Footprint + I(Accounts^2) +
-             I(Total.Households^2) + Footprint:I(Accounts^2) +
-             Footprint:I(Total.Households^2),
-           data = d))
-```  
-Here we find all coefficients are significant at the $\alpha = 0.05$ level. That is, we can be at least 95% confident in the significance of these coefficients. $R^2 = 0.5706$ and $R^2_a = 0.5354$. These values are close to the obese one above. Also, the interaction terms with `Footprint` are all the most significant ones. 
 
+The p-value of 0.03732 obtained from the test definately indicates the presence of second degree term and a p-value of 0.04909 obtained for third degree term also indicates that an even higher term might be present. 
+
+#### Exploring all models
+
+We try and explore as many models as possible (see _Additional Codeblock 7_ for detailed summary) with degree 2 and degree 3 terms and obtain the following results for $R^2$ and $R^2_a$
+
+  Model                                          |  $R^2$    | $Adjusted R^2$  
+  -----------------------------------------------|-----------|---------------
+  Accounts ~ Total.Households + Footprint        |           |
+                  + I(Total.Households^2)        | 0.8415    |  0.8374  
+  Accounts ~ Total.Households + Footprint        |           |
+               +Total.Households:Footprint       | 0.8923    |  0.8895 
+  Accounts ~ Total.Households + Footprint        |           |
+               + I(Total.Households^2)           |           |
+               + Total.Households:Footprint      | 0.8934    |  0.8897 
+  Accounts ~ Total.Households + Footprint        |           |
+               + I(Total.Households^2)           |           |
+               + I(Total.Households^3)           |           |
+               + Total.Households:Footprint      | 0.8957    | 0.8911 
+  Accounts ~ Total.Households + Footprint        |           |
+               + I(Total.Households^2)           |           |
+               + I(Total.Households^2):Footprint | 0.8882    | 0.8843
+  Accounts ~ Total.Households + Footprint        |           | 
+               + I(Total.Households^2)           |           |
+               + Total.Households:Footprint      |           |
+               + I(Total.Households^2):Footprint | 0.8934    | 0.8887
+              
 Details how we arrived at the models that we tried and how they worked. Include details about both the processes and the model to which they led. Our thought processes should be detailed so that there is no question how we got to our models. This needs to do all of the leg work so that the Conclusions section can focus on the actual meaning of the model. _This section should include subsections for each model with two hashes and then further subsectioniong using three hashes for each part of the model discussion._  
+
 
 # Conclusions
 The goal is that everything is built up to this point so that little we can just plow right into the meaning of the model. Other general conclusions can be included.  
@@ -160,12 +181,41 @@ d[["Accts.Hsehld"]] <- d[["Accounts"]] / d[["Total.Households"]]
 head(d)
 ```  
 
+
 \begin{center} \textbf{Additional Codeblock 2} \end{center}
 
+```{r echo=FALSE}
+lm_1 <- lm(Accounts ~ Total.Households, data = d)
+summary(lm_1)
+
+lm_2 <- lm(Accounts ~ Footprint, data = d)
+summary(lm_2)
+
+lm_3 <- lm(Accounts ~ Accts.Hsehld, data = d)
+summary(lm_3)
+```  
+
+
+\begin{center} \textbf{Additional Codeblock 3} \end{center}
+```{r echo=FALSE}
+lm_4 <- lm(Accts.Hsehld ~ Total.Households, data = d)
+summary(lm_4)
+
+lm_5 <- lm(Accts.Hsehld ~ Accounts, data = d)
+summary(lm_5)
+
+lm_6 <- lm(Accts.Hsehld ~ Footprint, data = d)
+summary(lm_6)
+```  
+
+
+\begin{center} \textbf{Additional Codeblock 4} \end{center}
 ```{r}
 summary(lm(Accts.Hsehld ~ Footprint + Total.Households, data = d))
 summary(lm(Accts.Hsehld ~ Footprint + Total.Households +
              Footprint:Total.Households, data = d))
+
+### Should we keep these models?? They violate Ramset test
 summary(lm(Accts.Hsehld ~ Footprint + Total.Households +
              Footprint:Total.Households + I(Total.Households^2),
              data = d))
@@ -173,8 +223,65 @@ summary(lm(Accts.Hsehld ~ Footprint + Total.Households +
              Footprint:Total.Households + I(Total.Households^2) +
              Footprint:I(Total.Households^2),
            data = d))
+
+summary(lm(Accts.Hsehld ~ Footprint + Accounts, data = d))
+summary(lm(Accts.Hsehld ~ Footprint + Accounts +
+             Footprint:Accounts, data = d))
+summary(lm(Accts.Hsehld ~ Footprint + Accounts +
+             Footprint:Accounts + I(Accounts^2),
+             data = d))
+summary(lm(Accts.Hsehld ~ Footprint + Accounts +
+             Footprint:Accounts + I(Accounts^2) +
+             Footprint:I(Accounts^2),
+           data = d))
 ```  
 
+\begin{center} \textbf{Additional Codeblock 5} \end{center}
+
+```{r echo=FALSE}
+lm_all <- lm(Accts.Hsehld ~ (. - ID + I(Accounts^2) + I(Total.Households^2))^2,
+             data = d)
+summary(lm_all)
+```  
+
+\begin{center} \textbf{Additional Codeblock 6} \end{center}
+
+```{r echo=FALSE}
+summary(lm(Accts.Hsehld ~ . - ID + Footprint:Accounts +
+             Total.Households:Footprint + I(Accounts^2) +
+             I(Total.Households^2) + Footprint:I(Accounts^2) +
+             Footprint:I(Total.Households^2),
+           data = d))
+```  
+
+\begin{center} \textbf{Additional Codeblock 7} \end{center}
+```{r}
+lm_7 <- lm(Accounts ~ Total.Households + Footprint, data = d)
+summary(lm_7)
+
+lm_8 <- lm(Accounts ~ Total.Households + Footprint + I(Total.Households^2), data = d)
+summary(lm_8)
+
+lm_9 <- lm(Accounts ~ Total.Households + Footprint +
+           Total.Households:Footprint, data = d)
+summary(lm_9)
+
+lm_10 <- lm(Accounts ~ Total.Households + Footprint + I(Total.Households^2) +
+             Total.Households:Footprint, data = d)
+summary(lm_10)
+
+lm_11 <- lm(Accounts ~ Total.Households + Footprint + I(Total.Households^2) +
+             I(Total.Households^3) + Total.Households:Footprint, data = d)
+summary(lm_11)
+
+lm_12 <- lm(Accounts ~ Total.Households + Footprint + I(Total.Households^2)+
+             I(Total.Households^2):Footprint, data = d)
+summary(lm_12)
+
+lm_13 <- lm(Accounts ~ Total.Households + Footprint + I(Total.Households^2) +
+             Total.Households:Footprint + I(Total.Households^2):Footprint, data = d)
+summary(lm_13)
+```
 ## Additional Figures
 
 \begin{center} \textbf{Additional Figure 1} \end{center}

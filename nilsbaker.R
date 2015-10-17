@@ -51,3 +51,12 @@ boxplot(nils$percentage ~ nils$i_o)
 by(nils$percentage, nils$i_o, summary)
 mosaicplot(table(nils$percentage, nils$i_o))
 barplot(table(nils$i_o))
+shapiro.test(nils$i_o)
+shapiro.test(nils$percentage)
+qqnorm(nils$percentage)
+
+ncvTest(lm_5)
+qchisq(.95, 1)
+# variance not normal
+
+
