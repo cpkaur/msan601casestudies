@@ -59,12 +59,12 @@ The goal in this case study, as stated by Nils Baker, is to ascertain whether or
 ### Predicting Number of Accounts
 We will start by evaluating SLR models for `Accounts`. Even though these models may be more difficult to interpret in terms of Nils Baker's hypothesis, if we find an especially good model, then we may make an exception. The $R^2$ values obtained for these three models were as follows:
 
-  Model                       |  $R^2$    | $Adjusted R^2$  
- -----------------------------|-----------|---------------
-  Accounts ~ Total.Households | 0.8303    |   0.8289  
-  Accounts ~ Footprint        | 0.04715   |   0.03907  
-  Accounts ~ Accts.Hsehld     | 0.00514   |  -0.003292   
- 
+Model                        $R^2$      $R^2_a$  
+---------------------------  ---------  ---------  
+Accounts ~ Total.Households  0.8303     0.8289  
+Accounts ~ Footprint         0.04715    0.03907  
+Accounts ~ Accts.Hsehld      0.00514    -0.003292  
+
 (see __Additional Codeblock 2__ in the _Appendix_ for the code )  
 Considering the results of the correlation matrix above, none of these results are particularly surprising. The total number of households in a region proves to be a good predictor of the number of accounts in the region. The coefficient of determination, denoted $R^2$, is high, so we know that a significant amount of the variation in `Accounts` is explained by `Total.Households`. Additionally, the p-value for the coefficient and the model are significant. However, this model only serves to highlight the drawbacks of choosing `Accounts` as the response variable since we can only determine that regions with more households have more accounts. We can say nothing about how likely a given household is to have an account.  
 The other two models, which use `Footprint` and `Accts.Hsehld`, are exceptionally poor. `Footprint` is the feature that most interests us since it tells us if a physical bank is in the region. While we would have been surprised to see the presence of a physical bank be a good predictor of the gross number of accounts, seeing that it is not fits in with what we would expect. Now we will look at SLR models predicting the number of accounts per household in a region.  
