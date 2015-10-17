@@ -101,9 +101,25 @@ resettest(lm_7, power = 2)
 lm_3 <- lm(Accounts ~ Total.Households + Footprint, data = d)
 summary(lm_3)
 
-lm_4 <- lm(Accounts ~ Total.Households + Footprint +
-           Total.Households:Footprint, data = d)
+lm_4 <- lm(Accounts ~ Total.Households + Footprint + I(Total.Households^2), data = d)
 summary(lm_4)
 
+lm_5 <- lm(Accounts ~ Total.Households + Footprint +
+           Total.Households:Footprint, data = d)
+summary(lm_5)
 
+lm_6 <- lm(Accounts ~ Total.Households + Footprint + I(Total.Households^2) +
+             Total.Households:Footprint, data = d)
+summary(lm_6)
 
+lm_7 <- lm(Accounts ~ Total.Households + Footprint + I(Total.Households^2) +
+             I(Total.Households^3) + Total.Households:Footprint, data = d)
+summary(lm_7)
+
+lm_8 <- lm(Accounts ~ Total.Households + Footprint + I(Total.Households^2)+
+             I(Total.Households^2):Footprint, data = d)
+summary(lm_8)
+
+lm_9 <- lm(Accounts ~ Total.Households + Footprint + I(Total.Households^2) +
+             Total.Households:Footprint + I(Total.Households^2):Footprint, data = d)
+summary(lm_9)
