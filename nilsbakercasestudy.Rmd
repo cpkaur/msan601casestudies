@@ -115,7 +115,7 @@ The code and summaries for each of the models explored can be found in __Additio
 We know that error cannot be unexplained. Thus, we can look at the $R^2$ value with all possible quadratic and interaction terms to get a sense of just how high we can hope to get that value when building our model and then start to delete variables that are insignificant. Additionally, we can compare $R^2_a$ to make sure that our chosen model improves on this. See __Additional Codeblock 5 and 6__ in the _Appendix_ for the full summaries.  
 For the model `Accts.Hsehld ~ (. - ID + I(Accounts^2) + I(Total.Households^2))^2` we get $R^2 = 0.6141$ and $R^2_a = 0.5585$. On comparing this model with a less bloated model,
 `Accts.Hsehld ~ . - ID + Footprint:Accounts + Total.Households:Footprint + I(Accounts^2) + I(Total.Households^2) + Footprint:I(Accounts^2) + Footprint:I(Total.Households^2)`, we find all coefficients are significant at the $\alpha = 0.05$ level. That is, we can be at least 95% confident in the significance of these coefficients. $R^2 = 0.5706$ and $R^2_a = 0.5354$. These values are close to the obese one above. Also, the interaction terms with `Footprint` are all the most significant ones.  
-Finally, we turn to a peculiar model that highlights the problem with having a response variable built off of two of its potential predictors. When the model is `log(Accts.Hsehld) ~ log(Accounts) + log(Total.Households)`, or any variation that contains those three elements, all variation is explained and $R^2 = R^2_a = 1$. This becomes obvious when looking at the math below.  
+Finally, we turn to a peculiar model that highlights the problem with having a response variable built off of two of its potential predictors. When the model is `log(Accts.Hsehld) ~ log(Accounts) + log(Total.Households)`, or any variation that contains those three elements, all variation is explained and $R^2 = R^2_a = 1$ (see __Codeblock 7__ in the _Appendix_ for the full summary). This becomes obvious when looking at the math below.  
 
 \begin{center} \textbf{Proof} \end{center}
 
@@ -130,7 +130,7 @@ The low $R^2$ values for the other models force us to reconsider our response va
 
 ### Models with Accounts as response variable
 #### Ramsey RESET Test
-We first check if there is a possibility of a higher oder term with the Ramsey Test.  
+We first check if there is a possibility of a higher order term with the Ramsey RESET Test.  
 
 \begin{center} \textbf{Figure 5} \end{center}
 
@@ -139,36 +139,34 @@ resettest(lm(Accounts ~ Total.Households + Footprint, data = d), power = 2)
 resettest(lm(Accounts ~ Total.Households + Footprint, data = d), power = 3)
 ```  
 
-The p-value of 0.03732 obtained from the test definately indicates the presence of second degree term and a p-value of 0.04909 obtained for third degree term also indicates that an even higher term might be present. 
+The p-value of 0.03732 obtained from the test indicates the potential value of second order term. The p-value of 0.04909 obtained for the potential third order term indicates that an even higher order term might be valuable too.  
 
 #### Exploring all models
-
-We try and explore as many models as possible (see __Additional Codeblock 8__ in the _Appendix_ for the summary) with degree 2 and degree 3 terms and obtain the following results for $R^2$ and $R^2_a$:  
+We explored many models (see __Additional Codeblock 8__ in the _Appendix_ for the summary) with degree 2 and degree 3 terms and obtained the following results for $R^2$ and $R^2_a$:  
 
 \begin{center} \textbf{Figure 6} \end{center}
 
-Model                                              $R^2$     $Adjusted R^2$  
-------------------------------------------------  -------  -------------------
-  Accounts ~ Total.Households + Footprint                   
-                  + I(Total.Households^2)          0.8415      0.8374 
+Model                                       $R^2$    $R^2_a$  
+------------------------------------------  -------  ---------  
+Accounts ~ Total.Households + Footprint                   
+                + I(Total.Households^2)     0.8415   0.8374  
   Accounts ~ Total.Households + Footprint                 
-               +Total.Households:Footprint         0.8923      0.8895 
+             + Total.Households:Footprint   0.8923   0.8895  
   Accounts ~ Total.Households + Footprint       
-               + I(Total.Households^2)           
-               + Total.Households:Footprint        0.8934      0.8897 
+             + I(Total.Households^2)           
+             + Total.Households:Footprint   0.8934   0.8897  
   Accounts ~ Total.Households + Footprint       
-               + I(Total.Households^2)           
-               + I(Total.Households^3)           
-               + Total.Households:Footprint        0.8957      0.8911 
+             + I(Total.Households^2)           
+             + I(Total.Households^3)           
+             + Total.Households:Footprint   0.8957   0.8911  
   Accounts ~ Total.Households + Footprint       
-               + I(Total.Households^2)           
-               + I(Total.Households^2):Footprint   0.8882      0.8843    
+        + I(Total.Households^2)           
+        + I(Total.Households^2):Footprint   0.8882   0.8843  
   Accounts ~ Total.Households + Footprint         
-               + I(Total.Households^2)           
-               + Total.Households:Footprint     
-               + I(Total.Households^2):Footprint   0.8934      0.8887
+        + I(Total.Households^2)           
+        + Total.Households:Footprint     
+        + I(Total.Households^2):Footprint   0.8934   0.8887  
 
-               
 Looking at the values for all these models we find `Accounts ~ Total.Households + Footprint + Total.Households:Footprint` as the most parsemonius model with high $R^2$ and $R^2_a$ values. Thus we choose it to be the best model that can explain the data. There are some common problems with all the models listed in table 3 as the they are not normal and the residual plots do not look very convincing for any of these. However, with the given amount of data this is the best we could come up with. 
 
 ## Results
