@@ -42,7 +42,7 @@ The data that we have received to pursue Nils Baker's hypothesis includes four c
 last two rows of the data set because they are empty and change the column names to _ID_, _Total.Households_, _Accounts_, and _Footprint_, respectively. Next, further preprocessing of the data is performed so that we have numeric data (see __Additional Codeblock 1__ in the _Appendix_ for the code used to do this).  
 The first column, _ID_, is identical to the row number and, thus, will not be considered in this case study. Each row itself is a separate Metropolitan Statistical Area (MSA). For our purposes, we need only understand that each row contains a different geographic region. The next two columns, _Total.Households_ and _Accounts_, contain the number of total households and the number of those households that have a checking account with the bank. The last column, _Footprint_, was originally coded with either "Inside" or "Outside." A region was considered "Inside" if there was both a physical bank location and an ATM in the region. This was recoded as 1 for easier analysis of the data. A region was considered "Outside" if there was not a physical bank location and only an ATM in the region. This was recoded as 0.  
 Finally, we will add a column called _Accts.Hsehld_ that takes the _Accounts_ column and divides it by the _Total.Households_ column. We may want to choose this as the response variable since this allows us to get closer to evaluating Nils Baker's hypothesis without as much interpretation of the model.  
-With the data in a usable form, we can now view the correlation matrix to get develop an initial understanding of the relationships amongst the variables.  
+With the data in a usable form, we can now view the correlation matrix to develop an initial understanding of existing relationships amongst different variables.  
 
 \begin{center} \textbf{Figure 1} \end{center}
 
@@ -57,7 +57,7 @@ The goal in this case study, as stated by Nils Baker, is to ascertain whether or
 ## SLR Models
 ### Predicting Number of Accounts
 We will start by evaluating SLR models for `Accounts`. Even though these models may be more difficult to interpret in terms of Nils Baker's hypothesis, if we find an especially good model, then we may make an exception. The $R^2$ values obtained for these three models were as follows:  
-
+\pagebreak 
 \begin{center} \textbf{Figure 2} \end{center}
 
 Model                        $R^2$      $R^2_a$    p-value  
@@ -183,6 +183,7 @@ residualPlots(lm(Accounts ~ Total.Households + Footprint +
               main = "Residual Plots for Bank Account Prediction")
 ```  
 
+\pagebreak
 \begin{center} \textbf{Figure 8} \end{center}
 
 ```{r echo=FALSE}
