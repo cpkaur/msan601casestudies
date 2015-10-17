@@ -76,11 +76,13 @@ Now we look at how each of the individual potential predictors does with `Accts.
 
 \begin{center} \textbf{Figure 3} \end{center}
 
-  Model                          |  $R^2$    | $Adjusted R^2$  
- --------------------------------|-----------|---------------
-  Accts.Hsehld ~ Total.Households| 0.007543  |  -0.0008672  
-  Accts.Hsehld ~ Accounts        | 0.00514   |  -0.003292  
-  Accts.Hsehld ~ Footprint       | 0.02321   |   0.01493 
+  Model                              $R^2$     $Adjusted R^2$  
+---------------------------------  --------  ------------------
+  Accts.Hsehld ~ Total.Households  0.007543    -0.0008672  
+  
+  Accts.Hsehld ~ Accounts          0.00514     -0.003292  
+  
+  Accts.Hsehld ~ Footprint         0.02321      0.01493  
 
 (see __Additional Codeblock 3__ in the _Appendix_ for the code ) 
 Once again, these results are aligned with those from the correlation matrix. All three SLR models are quite poor. Their respective $R^2$ values are very low, and their respective p-values are high. With a higher p-value we cannot reject the null hypothesis these models are just as good as the average at predicting `Accts.Hsehld`. Interestingly, the $R^2$ and p-values are best, albeit still terrible, for the SLR that used `Footprint`. Depending on what we find when looking at MLR models, Nils Baker's hypothesis still has a chance at being correct.  
@@ -139,26 +141,27 @@ We try and explore as many models as possible (see _Additional Codeblock 7_ for 
 
 \begin{center} \textbf{Figure 6} \end{center}
 
-  Model                                          |  $R^2$    | $Adjusted R^2$  
-  -----------------------------------------------|-----------|---------------
-  Accounts ~ Total.Households + Footprint        |           |
-                  + I(Total.Households^2)        | 0.8415    |  0.8374  
-  Accounts ~ Total.Households + Footprint        |           |
-               +Total.Households:Footprint       | 0.8923    |  0.8895 
-  Accounts ~ Total.Households + Footprint        |           |
-               + I(Total.Households^2)           |           |
-               + Total.Households:Footprint      | 0.8934    |  0.8897 
-  Accounts ~ Total.Households + Footprint        |           |
-               + I(Total.Households^2)           |           |
-               + I(Total.Households^3)           |           |
-               + Total.Households:Footprint      | 0.8957    | 0.8911 
-  Accounts ~ Total.Households + Footprint        |           |
-               + I(Total.Households^2)           |           |
-               + I(Total.Households^2):Footprint | 0.8882    | 0.8843
-  Accounts ~ Total.Households + Footprint        |           | 
-               + I(Total.Households^2)           |           |
-               + Total.Households:Footprint      |           |
-               + I(Total.Households^2):Footprint | 0.8934    | 0.8887
+Model                                              $R^2$     $Adjusted R^2$  
+------------------------------------------------  -------  -------------------
+  Accounts ~ Total.Households + Footprint                   
+                  + I(Total.Households^2)          0.8415      0.8374 
+  Accounts ~ Total.Households + Footprint                 
+               +Total.Households:Footprint         0.8923      0.8895 
+  Accounts ~ Total.Households + Footprint       
+               + I(Total.Households^2)           
+               + Total.Households:Footprint        0.8934      0.8897 
+  Accounts ~ Total.Households + Footprint       
+               + I(Total.Households^2)           
+               + I(Total.Households^3)           
+               + Total.Households:Footprint        0.8957      0.8911 
+  Accounts ~ Total.Households + Footprint       
+               + I(Total.Households^2)           
+               + I(Total.Households^2):Footprint   0.8882      0.8843    
+  Accounts ~ Total.Households + Footprint         
+               + I(Total.Households^2)           
+               + Total.Households:Footprint     
+               + I(Total.Households^2):Footprint   0.8934      0.8887
+
                
 Looking at the values for all these models we find `Accounts ~ Total.Households + Footprint + Total.Households:Footprint` as the most parsemonius model with high $R^2$ and $R^2_a$ values. Thus we choose it to be the best model that can explain the data. There are some common problems with all the models listed in table 3 as the they are not normal and the residual plots do not look very convincing for any of these. However, with the given amount of data this is the best we could come up with. 
 
