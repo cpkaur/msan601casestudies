@@ -57,7 +57,9 @@ The goal in this case study, as stated by Nils Baker, is to ascertain whether or
 
 ## SLR Models
 ### Predicting Number of Accounts
-We will start by evaluating SLR models for `Accounts`. Even though these models may be more difficult to interpret in terms of Nils Baker's hypothesis, if we find an especially good model, then we may make an exception. The $R^2$ values obtained for these three models were as follows:
+We will start by evaluating SLR models for `Accounts`. Even though these models may be more difficult to interpret in terms of Nils Baker's hypothesis, if we find an especially good model, then we may make an exception. The $R^2$ values obtained for these three models were as follows:  
+
+\begin{center} \textbf{Figure 2} \end{center}
 
 Model                        $R^2$      $R^2_a$  
 ---------------------------  ---------  ---------  
@@ -71,6 +73,8 @@ The other two models, which use `Footprint` and `Accts.Hsehld`, are exceptionall
 
 ### Predicting Accounts per Household
 Now we look at how each of the individual potential predictors does with `Accts.Hsehld` as the response variable. By using this response variable, we can easily understand which potential predictors are involved in determining the likelihood of a given household having an account with the bank. The $R^2$ values obtained for these three models were as follows:  
+
+\begin{center} \textbf{Figure 3} \end{center}
 
   Model                          |  $R^2$    | $Adjusted R^2$  
  --------------------------------|-----------|---------------
@@ -98,7 +102,8 @@ The Ramsey RESET Test attempts to determine if quadratic terms add value to a mo
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(lmtest)
 resettest(lm(Accts.Hsehld ~ Accounts + Total.Households, data = d), power = 2)
-resettest(lm(Accts.Hsehld ~ Accounts + Total.Households + Footprint, data = d), power = 2)
+resettest(lm(Accts.Hsehld ~ Accounts + Total.Households + Footprint, data = d),
+          power = 2)
 ```  
 We see that the p-value is about as bad as is possible at 0.9965. This test was run for just possible quadratic terms. We will not evaluate any higher order terms with such a poor value. We did not run the test with `Footprint` in the model because a qualitative variable cannot be squared. Thus, we expect that quadratic terms will be most valuable for their interactions, if at all. Now we turn our attention to actual MLR models.  
 
@@ -117,19 +122,22 @@ The low $R^2$ values forced us to reconsider our response variable. We had previ
 
 ### Models with Accounts as response variable
 #### Ramsey RESET Test
-We first check if there is a possibility of a higher oder term with the Ramsey Test
+We first check if there is a possibility of a higher oder term with the Ramsey Test.  
+
+\begin{center} \textbf{Figure 5} \end{center}
+
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-library(lmtest)
-resettest(lm(Accounts~ Total.Households + Footprint, data = d), power = 2)
-resettest(lm(Accounts~ Total.Households + Footprint, data = d), power = 3)
+resettest(lm(Accounts ~ Total.Households + Footprint, data = d), power = 2)
+resettest(lm(Accounts ~ Total.Households + Footprint, data = d), power = 3)
 ```  
 
 The p-value of 0.03732 obtained from the test definately indicates the presence of second degree term and a p-value of 0.04909 obtained for third degree term also indicates that an even higher term might be present. 
 
 #### Exploring all models
 
-We try and explore as many models as possible (see _Additional Codeblock 7_ for detailed summary) with degree 2 and degree 3 terms and obtain the following results for $R^2$ and $R^2_a$:
+We try and explore as many models as possible (see _Additional Codeblock 7_ for detailed summary) with degree 2 and degree 3 terms and obtain the following results for $R^2$ and $R^2_a$:  
 
+\begin{center} \textbf{Figure 6} \end{center}
 
   Model                                          |  $R^2$    | $Adjusted R^2$  
   -----------------------------------------------|-----------|---------------
@@ -156,19 +164,28 @@ Looking at the values for all these models we find `Accounts ~ Total.Households 
 
 ## Results
 
-The best model that we could generate from the given data was `Accounts ~ Total.Households + Footprint + Total.Households:Footprint`. On plotting the residuals and looking for normality of the data we find that the data is not normal but error terms do not show nearly constant variance:
+The best model that we could generate from the given data was `Accounts ~ Total.Households + Footprint + Total.Households:Footprint`. On plotting the residuals and looking for normality of the data we find that the data is not normal but error terms do not show nearly constant variance:  
 
-```{r}
-library("car")
+\begin{center} \textbf{Figure 7} \end{center}
+
+```{r echo=FALSE}
+library(car)
 residualPlots(lm(Accounts ~ Total.Households + Footprint + 
                   Total.Households:Footprint, data = d))
+```  
+
+\begin{center} \textbf{Figure 8} \end{center}
+
+```{r echo=FALSE}
 qqPlot(residuals(lm(Accounts ~ Total.Households + Footprint + 
                   Total.Households:Footprint, data = d)), distribution = "norm")
 ```
 
-The variance of the error terms is further confirmed by using the Breusch-Pagan test which results in the conclusion that variance of the error terms is constant.
+The variance of the error terms is further confirmed by using the Breusch-Pagan test which results in the conclusion that variance of the error terms is constant.  
+
+\begin{center} \textbf{Figure 9} \end{center}
+
 ```{r}
-library("car")
 ncvTest(lm(Accounts ~ Total.Households + Footprint + 
                   Total.Households:Footprint, data = d))
 qchisq(.95, 1)
