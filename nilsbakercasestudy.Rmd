@@ -125,7 +125,8 @@ Then, $\log{\frac{A}{H}} = b_0 + b_1 \log{A} + b_2 \log{H} \iff \log{A} - \log{H
 If we let $b_0 = 0$, $b_1 = 1$, $b_2 = -1$, then both sides are equal.  
 Thus, we know we know both sides of the regression equation will always be equal. $\Box$  
 
-The low $R^2$ values forced us to reconsider our response variable. We had previously seen that Accounts when regressed on Total.Households gave the best $R^2$ value so far of 0.8303. Thus, we further explored models with Accounts as the response variable. 
+This highlights the shortcoming of this approach and must cause us to reconsider it when we only have these three potential predictors.  
+The low $R^2$ values for the other models force us to reconsider our response variable too. We have seen previously that `Accounts` regressed on `Total.Households` gives the best $R^2$ value so far of 0.8303. Thus, we further explored models with `Accounts` as the response variable.  
 
 ### Models with Accounts as response variable
 #### Ramsey RESET Test
